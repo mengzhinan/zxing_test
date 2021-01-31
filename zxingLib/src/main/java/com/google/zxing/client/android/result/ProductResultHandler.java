@@ -42,7 +42,7 @@ public final class ProductResultHandler extends ResultHandler {
 
     @Override
     public int getButtonCount() {
-        return hasCustomProductSearch() ? buttons.length : buttons.length - 1;
+        return buttons.length - 1;
     }
 
     @Override
@@ -59,9 +59,6 @@ public final class ProductResultHandler extends ResultHandler {
                 break;
             case 1:
                 webSearch(productID);
-                break;
-            case 2:
-                openURL(fillInCustomSearchURL(productID));
                 break;
         }
     }

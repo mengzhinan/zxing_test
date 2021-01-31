@@ -52,9 +52,6 @@ public final class PreferencesFragment
                                     PreferencesActivity.KEY_DECODE_PDF417);
     disableLastCheckedPref();
 
-    EditTextPreference customProductSearch = (EditTextPreference)
-        preferences.findPreference(PreferencesActivity.KEY_CUSTOM_PRODUCT_SEARCH);
-    customProductSearch.setOnPreferenceChangeListener(new CustomSearchURLValidator());
   }
 
   private static CheckBoxPreference[] findDecodePrefs(PreferenceScreen preferences, String... keys) {

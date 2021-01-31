@@ -42,7 +42,7 @@ public final class ISBNResultHandler extends ResultHandler {
 
   @Override
   public int getButtonCount() {
-    return hasCustomProductSearch() ? buttons.length : buttons.length - 1;
+    return buttons.length - 1;
   }
 
   @Override
@@ -62,9 +62,6 @@ public final class ISBNResultHandler extends ResultHandler {
         break;
       case 2:
         searchBookContents(isbnResult.getISBN());
-        break;
-      case 3:
-        openURL(fillInCustomSearchURL(isbnResult.getISBN()));
         break;
     }
   }

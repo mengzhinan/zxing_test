@@ -42,7 +42,7 @@ public final class TextResultHandler extends ResultHandler {
 
   @Override
   public int getButtonCount() {
-    return hasCustomProductSearch() ? buttons.length : buttons.length - 1;
+    return buttons.length - 1;
   }
 
   @Override
@@ -62,9 +62,6 @@ public final class TextResultHandler extends ResultHandler {
         break;
       case 2:
         shareBySMS(text);
-        break;
-      case 3:
-        openURL(fillInCustomSearchURL(text));
         break;
     }
   }
