@@ -373,9 +373,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     } else if (itemId == R.id.menu_settings) {
       intent.setClassName(this, PreferencesActivity.class.getName());
       startActivity(intent);
-    } else if (itemId == R.id.menu_help) {
-      intent.setClassName(this, HelpActivity.class.getName());
-      startActivity(intent);
     } else {
       return super.onOptionsItemSelected(item);
     }

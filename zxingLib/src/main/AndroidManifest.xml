@@ -148,10 +148,7 @@
         <activity android:name=".share.AppPickerActivity"
             android:label="@string/app_picker_name"
             android:stateNotNeeded="true"/>
-        <activity android:name=".HelpActivity"
-            android:label="@string/menu_help"
-            android:screenOrientation="user"
-            android:stateNotNeeded="true"/>
+
     </application>
 
 </manifest>
