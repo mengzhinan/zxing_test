@@ -64,24 +64,13 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
-    private static final String[] ZXING_URLS = {"http://zxing.appspot.com/scan", "zxing://scan/"};
-
-    private static final Collection<ResultMetadataType> DISPLAYABLE_METADATA_TYPES =
-            EnumSet.of(ResultMetadataType.ISSUE_NUMBER,
-                    ResultMetadataType.SUGGESTED_PRICE,
-                    ResultMetadataType.ERROR_CORRECTION_LEVEL,
-                    ResultMetadataType.POSSIBLE_COUNTRY);
-
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private Result savedResultToShow;
     private ViewfinderView viewfinderView;
     private TextView statusView;
-    private View resultView;
     private boolean hasSurface;
-    private String sourceUrl;
     private Collection<BarcodeFormat> decodeFormats;
-    private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
     private InactivityTimer inactivityTimer;
     private BeepManager beepManager;
@@ -128,18 +117,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
 
-        resultView = findViewById(R.id.result_view);
         statusView = (TextView) findViewById(R.id.status_view);
 
         handler = null;
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (prefs.getBoolean(PreferencesActivity.KEY_DISABLE_AUTO_ORIENTATION, true)) {
-            setRequestedOrientation(getCurrentOrientation());
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        }
 
         resetStatusView();
 
@@ -149,65 +129,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         inactivityTimer.onResume();
 
-        Intent intent = getIntent();
-        sourceUrl = null;
         decodeFormats = null;
         characterSet = null;
-
-        if (intent != null) {
-
-            String action = intent.getAction();
-            String dataString = intent.getDataString();
-
-            if (Intents.Scan.ACTION.equals(action)) {
-
-                // Scan the formats the intent requested, and return the result to the calling activity.
-                decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
-                decodeHints = DecodeHintManager.parseDecodeHints(intent);
-
-                if (intent.hasExtra(Intents.Scan.WIDTH) && intent.hasExtra(Intents.Scan.HEIGHT)) {
-                    int width = intent.getIntExtra(Intents.Scan.WIDTH, 0);
-                    int height = intent.getIntExtra(Intents.Scan.HEIGHT, 0);
-                    if (width > 0 && height > 0) {
-                        cameraManager.setManualFramingRect(width, height);
-                    }
-                }
-
-                if (intent.hasExtra(Intents.Scan.CAMERA_ID)) {
-                    int cameraId = intent.getIntExtra(Intents.Scan.CAMERA_ID, -1);
-                    if (cameraId >= 0) {
-                        cameraManager.setManualCameraId(cameraId);
-                    }
-                }
-
-                String customPromptMessage = intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE);
-                if (customPromptMessage != null) {
-                    statusView.setText(customPromptMessage);
-                }
-
-            } else if (dataString != null &&
-                    dataString.contains("http://www.google") &&
-                    dataString.contains("/m/products/scan")) {
-
-                // Scan only products and send the result to mobile Product Search.
-                sourceUrl = dataString;
-                decodeFormats = DecodeFormatManager.PRODUCT_FORMATS;
-
-            } else if (isZXingURL(dataString)) {
-
-                // Scan formats requested in query string (all formats if none specified).
-                // If a return URL is specified, send the results there. Otherwise, handle it ourselves.
-                sourceUrl = dataString;
-                Uri inputUri = Uri.parse(dataString);
-                decodeFormats = DecodeFormatManager.parseDecodeFormats(inputUri);
-                // Allow a sub-set of the hints to be specified by the caller.
-                decodeHints = DecodeHintManager.parseDecodeHints(inputUri);
-
-            }
-
-            characterSet = intent.getStringExtra(Intents.Scan.CHARACTER_SET);
-
-        }
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -219,39 +142,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             // Install the callback and wait for surfaceCreated() to init the camera.
             surfaceHolder.addCallback(this);
         }
-    }
-
-    private int getCurrentOrientation() {
-        int rotation = getWindowManager().getDefaultDisplay().getRotation();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            switch (rotation) {
-                case Surface.ROTATION_0:
-                case Surface.ROTATION_90:
-                    return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                default:
-                    return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
-            }
-        } else {
-            switch (rotation) {
-                case Surface.ROTATION_0:
-                case Surface.ROTATION_270:
-                    return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-                default:
-                    return ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-            }
-        }
-    }
-
-    private static boolean isZXingURL(String dataString) {
-        if (dataString == null) {
-            return false;
-        }
-        for (String url : ZXING_URLS) {
-            if (dataString.startsWith(url)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -368,6 +258,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         Log.e("showshowconetnt", "content = " + rawResult.getText());
         beepManager.playBeepSoundAndVibrate();
 
+        finish();
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
@@ -382,7 +273,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             cameraManager.openDriver(surfaceHolder);
             // Creating the handler starts the preview, which can also throw a RuntimeException.
             if (handler == null) {
-                handler = new CaptureActivityHandler(this, decodeFormats, decodeHints, characterSet, cameraManager);
+                handler = new CaptureActivityHandler(this, decodeFormats, characterSet, cameraManager);
             }
             decodeOrStoreSavedBitmap(null, null);
         } catch (IOException ioe) {
@@ -406,7 +297,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     private void resetStatusView() {
-        resultView.setVisibility(View.GONE);
         statusView.setText(R.string.msg_default_status);
         statusView.setVisibility(View.VISIBLE);
         viewfinderView.setVisibility(View.VISIBLE);
