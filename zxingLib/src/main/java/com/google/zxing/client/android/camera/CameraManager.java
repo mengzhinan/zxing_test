@@ -66,7 +66,7 @@ public final class CameraManager {
     public CameraManager(Context context) {
         this.context = context;
         this.configManager = new CameraConfigurationManager(context);
-        previewCallback = new PreviewCallback(configManager);
+        this.previewCallback = new PreviewCallback(this.configManager);
     }
 
     /**

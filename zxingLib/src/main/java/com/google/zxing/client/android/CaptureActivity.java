@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -57,7 +56,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
-    private Result savedResultToShow;
     private ViewfinderView viewfinderView;
     private TextView statusView;
     private boolean hasSurface;
@@ -199,22 +197,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         return true;
     }
 
-    private void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result) {
-        // Bitmap isn't used yet -- will be used soon
-        if (handler == null) {
-            savedResultToShow = result;
-        } else {
-            if (result != null) {
-                savedResultToShow = result;
-            }
-            if (savedResultToShow != null) {
-                Message message = Message.obtain(handler, R.id.decode_succeeded, savedResultToShow);
-                handler.sendMessage(message);
-            }
-            savedResultToShow = null;
-        }
-    }
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (holder == null) {
@@ -265,7 +247,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             if (handler == null) {
                 handler = new CaptureActivityHandler(this, decodeFormats, characterSet, cameraManager);
             }
-            decodeOrStoreSavedBitmap(null, null);
         } catch (IOException ioe) {
             Log.w(TAG, ioe);
             displayFrameworkBugMessageAndExit();
