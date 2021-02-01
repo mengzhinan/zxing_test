@@ -122,18 +122,6 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-        <activity android:name=".book.SearchBookContentsActivity"
-            android:label="@string/sbc_name"
-            android:stateNotNeeded="true"
-            android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="com.google.zxing.client.android.SEARCH_BOOK_CONTENTS"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".history.HistoryActivity"
-            android:label="@string/history_title"
-            android:stateNotNeeded="true"/>
     </application>
 
 </manifest>
