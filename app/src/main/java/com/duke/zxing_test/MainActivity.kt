@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.duke.dpermission.DPermission
-import com.google.zxing.client.android.CaptureActivity
+import com.duke.zxinglib.decode.CaptureActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
