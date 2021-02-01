@@ -19,11 +19,7 @@ package com.google.zxing.client.android;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +29,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -42,15 +37,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
-import com.google.zxing.ResultMetadataType;
 import com.google.zxing.client.android.camera.CameraManager;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Map;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
