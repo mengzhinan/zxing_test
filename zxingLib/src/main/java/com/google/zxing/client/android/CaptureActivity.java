@@ -249,7 +249,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         Log.e("showshowconetnt", "content = " + rawResult.getText());
         beepManager.playBeepSoundAndVibrate();
 
-        finish();
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
