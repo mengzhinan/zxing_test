@@ -11,10 +11,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         DPermission.newInstance(this)
             .setCallback {
@@ -22,4 +18,5 @@ class MainActivity : AppCompatActivity() {
             }.startRequest(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     }
+
 }
