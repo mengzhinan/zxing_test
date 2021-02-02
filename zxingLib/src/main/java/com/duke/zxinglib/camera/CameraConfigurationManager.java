@@ -26,10 +26,10 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
-import com.google.zxing.client.android.camera.CameraConfigurationUtils;
-import com.duke.zxinglib.decode.PreferencesActivity;
 import com.duke.zxinglib.camera.open.CameraFacing;
 import com.duke.zxinglib.camera.open.OpenCamera;
+import com.duke.zxinglib.decode.PreferencesActivity;
+import com.google.zxing.client.android.camera.CameraConfigurationUtils;
 
 /**
  * A class which deals with reading, parsing, and setting the camera parameters which are used to
@@ -121,10 +121,12 @@ final class CameraConfigurationManager {
         Point theScreenResolution = new Point();
         display.getSize(theScreenResolution);
         screenResolution = theScreenResolution;
+        // 交换大小，修复预览图像拉伸
+        Point newPoint = repairVerticalPreviewStretch(screenResolution);
         Log.i(TAG, "Screen resolution in current orientation: " + screenResolution);
-        cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+        cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
         Log.i(TAG, "Camera resolution: " + cameraResolution);
-        bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+        bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
         Log.i(TAG, "Best available preview size: " + bestPreviewSize);
 
         boolean isScreenPortrait = screenResolution.x < screenResolution.y;
@@ -136,6 +138,27 @@ final class CameraConfigurationManager {
             previewSizeOnScreen = new Point(bestPreviewSize.y, bestPreviewSize.x);
         }
         Log.i(TAG, "Preview size on screen: " + previewSizeOnScreen);
+    }
+
+    /**
+     * 交换 x 和 y 的值，解决竖屏扫码预览时图像拉伸
+     *
+     * @param point 原 point 对象
+     * @return 无返回值，直接在原 point 对象内存地址里面修改
+     */
+    private Point repairVerticalPreviewStretch(Point point) {
+        if (point == null) {
+            return null;
+        }
+        int a = point.x;
+        int b = point.y;
+        if (a < b) {
+            // 交换大小
+            a = a + b;
+            b = a - b;
+            a = a - b;
+        }
+        return new Point(a, b);
     }
 
     void setDesiredCameraParameters(OpenCamera camera, boolean safeMode) {
