@@ -36,9 +36,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.duke.zxinglib.R;
+import com.duke.zxinglib.camera.CameraManager;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.duke.zxinglib.camera.CameraManager;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -274,7 +274,4 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         viewfinderView.setVisibility(View.VISIBLE);
     }
 
-    public void drawViewfinder() {
-        viewfinderView.drawViewfinder();
-    }
 }
