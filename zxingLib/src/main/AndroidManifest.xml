@@ -60,8 +60,7 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
-        android:logo="@drawable/launcher_icon">
+        android:label="@string/app_name">
         <activity
             android:name="com.duke.zxinglib.decode.CaptureActivity"
             android:clearTaskOnLaunch="true"
