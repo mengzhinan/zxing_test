@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.duke.dpermission;
+package com.duke.zxing_test.utils;
 
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;

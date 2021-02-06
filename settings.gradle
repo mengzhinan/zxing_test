@@ -1,4 +1,3 @@
-include ':DPermission'
 include ':zxingLib'
 include ':app'
 rootProject.name = "zxing_test"
