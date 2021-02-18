@@ -81,44 +81,4 @@ public final class PreferencesFragment
         }
     }
 
-    private class CustomSearchURLValidator implements Preference.OnPreferenceChangeListener {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (!isValid(newValue)) {
-                AlertDialog.Builder builder =
-                        new AlertDialog.Builder(PreferencesFragment.this.getActivity());
-                builder.setTitle(R.string.msg_error);
-                builder.setMessage(R.string.msg_invalid_value);
-                builder.setCancelable(true);
-                builder.show();
-                return false;
-            }
-            return true;
-        }
-
-        private boolean isValid(Object newValue) {
-            // Allow empty/null value
-            if (newValue == null) {
-                return true;
-            }
-            String valueString = newValue.toString();
-            if (valueString.isEmpty()) {
-                return true;
-            }
-            // Before validating, remove custom placeholders, which will not
-            // be considered valid parts of the URL in some locations:
-            // Blank %t and %s:
-            valueString = valueString.replaceAll("%[st]", "");
-            // Blank %f but not if followed by digit or a-f as it may be a hex sequence
-            valueString = valueString.replaceAll("%f(?![0-9a-f])", "");
-            // Require a scheme otherwise:
-            try {
-                URI uri = new URI(valueString);
-                return uri.getScheme() != null;
-            } catch (URISyntaxException use) {
-                return false;
-            }
-        }
-    }
-
 }
