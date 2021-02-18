@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.duke.zxinglib.R;
 import com.duke.zxinglib.camera.CameraManager;
+import com.duke.zxinglib.setting.PreferencesActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 

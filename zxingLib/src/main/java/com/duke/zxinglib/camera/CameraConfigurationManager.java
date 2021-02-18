@@ -28,7 +28,8 @@ import android.view.WindowManager;
 
 import com.duke.zxinglib.camera.open.CameraFacing;
 import com.duke.zxinglib.camera.open.OpenCamera;
-import com.duke.zxinglib.decode.PreferencesActivity;
+import com.duke.zxinglib.setting.PreferencesActivity;
+import com.duke.zxinglib.setting.FrontLightMode;
 import com.google.zxing.client.android.camera.CameraConfigurationUtils;
 
 /**
@@ -179,12 +180,12 @@ final class CameraConfigurationManager {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        initializeTorch(parameters, prefs, safeMode);
+        initializeTorch(parameters, safeMode);
 
         CameraConfigurationUtils.setFocus(
                 parameters,
-                prefs.getBoolean(PreferencesActivity.KEY_AUTO_FOCUS, true),
-                prefs.getBoolean(PreferencesActivity.KEY_DISABLE_CONTINUOUS_FOCUS, true),
+                true,
+                false,
                 safeMode);
 
         if (!safeMode) {
@@ -192,9 +193,7 @@ final class CameraConfigurationManager {
                 CameraConfigurationUtils.setInvertColor(parameters);
             }
 
-            if (!prefs.getBoolean(PreferencesActivity.KEY_DISABLE_BARCODE_SCENE_MODE, true)) {
-                CameraConfigurationUtils.setBarcodeSceneMode(parameters);
-            }
+            CameraConfigurationUtils.setBarcodeSceneMode(parameters);
 
             if (!prefs.getBoolean(PreferencesActivity.KEY_DISABLE_METERING, true)) {
                 CameraConfigurationUtils.setVideoStabilization(parameters);
@@ -259,9 +258,8 @@ final class CameraConfigurationManager {
         camera.setParameters(parameters);
     }
 
-    private void initializeTorch(Camera.Parameters parameters, SharedPreferences prefs, boolean safeMode) {
-        boolean currentSetting = FrontLightMode.readPref(prefs) == FrontLightMode.ON;
-        doSetTorch(parameters, currentSetting, safeMode);
+    private void initializeTorch(Camera.Parameters parameters, boolean safeMode) {
+        doSetTorch(parameters, FrontLightMode.isModeOn(), safeMode);
     }
 
     private void doSetTorch(Camera.Parameters parameters, boolean newSetting, boolean safeMode) {

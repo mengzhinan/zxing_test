@@ -69,10 +69,6 @@
             android:theme="@style/CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.duke.zxinglib.decode.PreferencesActivity"
-            android:label="@string/preferences_name"
-            android:stateNotNeeded="true" />
-        <activity
             android:name="com.duke.zxinglib.encode.EncodeActivity"
             android:stateNotNeeded="true">
             <intent-filter>

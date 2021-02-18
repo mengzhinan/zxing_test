@@ -14,36 +14,40 @@
  * limitations under the License.
  */
 
-package com.duke.zxinglib.camera;
-
-import android.content.SharedPreferences;
-
-import com.duke.zxinglib.decode.PreferencesActivity;
+package com.duke.zxinglib.setting;
 
 /**
  * Enumerates settings of the preference controlling the front light.
  */
-public enum FrontLightMode {
+public class FrontLightMode {
+
+    /**
+     * On only when ambient light is low.
+     */
+    public static final int MODE_AUTO = 0;
 
     /**
      * Always on.
      */
-    ON,
-    /**
-     * On only when ambient light is low.
-     */
-    AUTO,
+    public static final int MODE_ON = 1;
+
     /**
      * Always off.
      */
-    OFF;
+    public static final int MODE_OFF = 2;
 
-    private static FrontLightMode parse(String modeString) {
-        return modeString == null ? OFF : valueOf(modeString);
+    private static int mode = MODE_OFF;
+
+    public static boolean isModeAuto() {
+        return mode == MODE_AUTO;
     }
 
-    public static FrontLightMode readPref(SharedPreferences sharedPrefs) {
-        return parse(sharedPrefs.getString(PreferencesActivity.KEY_FRONT_LIGHT_MODE, OFF.toString()));
+    public static boolean isModeOn() {
+        return mode == MODE_ON;
+    }
+
+    public static boolean isModeOff() {
+        return mode == MODE_OFF;
     }
 
 }
