@@ -37,13 +37,6 @@
         android:title="@string/preferences_vibrate_title"/>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/preferences_general_title">
-    <ListPreference
-        android:entries="@array/preferences_front_light_options"
-        android:entryValues="@array/preferences_front_light_values"
-        android:key="preferences_front_light_mode"
-        android:defaultValue="OFF"
-        android:title="@string/preferences_front_light_title"
-        android:summary="@string/preferences_front_light_summary"/>
     <CheckBoxPreference
         android:key="preferences_auto_focus"
         android:defaultValue="true"
