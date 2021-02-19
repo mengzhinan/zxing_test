@@ -23,7 +23,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import com.duke.zxinglib.camera.CameraManager;
-import com.duke.zxinglib.setting.FrontLightMode;
+import com.duke.zxinglib.settings.FrontLightMode;
 
 /**
  * Detects ambient light and switches on the front light when very dark, and off again when sufficiently light.

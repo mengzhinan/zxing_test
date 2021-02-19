@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duke.zxinglib.setting;
+package com.duke.zxinglib.settings;
 
 /**
  * Enumerates settings of the preference controlling the front light.

@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.duke.zxinglib.camera.open.OpenCameraInterface;
+import com.duke.zxinglib.settings.CameraConfigurationManager;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.duke.zxinglib.camera.open.OpenCamera;
 import com.duke.zxinglib.decode.CaptureActivity;

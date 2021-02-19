@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duke.zxinglib.camera;
+package com.duke.zxinglib.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,15 +28,13 @@ import android.view.WindowManager;
 
 import com.duke.zxinglib.camera.open.CameraFacing;
 import com.duke.zxinglib.camera.open.OpenCamera;
-import com.duke.zxinglib.setting.PreferencesActivity;
-import com.duke.zxinglib.setting.FrontLightMode;
 import com.google.zxing.client.android.camera.CameraConfigurationUtils;
 
 /**
  * A class which deals with reading, parsing, and setting the camera parameters which are used to
  * configure the camera hardware.
  */
-final class CameraConfigurationManager {
+public final class CameraConfigurationManager {
 
     private static final String TAG = "CameraConfiguration";
 
@@ -48,14 +46,14 @@ final class CameraConfigurationManager {
     private Point bestPreviewSize;
     private Point previewSizeOnScreen;
 
-    CameraConfigurationManager(Context context) {
+    public CameraConfigurationManager(Context context) {
         this.context = context;
     }
 
     /**
      * Reads, one time, values from the camera that are needed by the app.
      */
-    void initFromCameraParameters(OpenCamera camera) {
+    public void initFromCameraParameters(OpenCamera camera) {
         Camera.Parameters parameters = camera.getCamera().getParameters();
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
@@ -93,20 +91,6 @@ final class CameraConfigurationManager {
             cwRotationFromNaturalToCamera = (360 - cwRotationFromNaturalToCamera) % 360;
             Log.i(TAG, "Front camera overriden to: " + cwRotationFromNaturalToCamera);
         }
-
-    /*
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    String overrideRotationString;
-    if (camera.getFacing() == CameraFacing.FRONT) {
-      overrideRotationString = prefs.getString(PreferencesActivity.KEY_FORCE_CAMERA_ORIENTATION_FRONT, null);
-    } else {
-      overrideRotationString = prefs.getString(PreferencesActivity.KEY_FORCE_CAMERA_ORIENTATION, null);
-    }
-    if (overrideRotationString != null && !"-".equals(overrideRotationString)) {
-      Log.i(TAG, "Overriding camera manually to " + overrideRotationString);
-      cwRotationFromNaturalToCamera = Integer.parseInt(overrideRotationString);
-    }
-     */
 
         cwRotationFromDisplayToCamera =
                 (360 + cwRotationFromNaturalToCamera - cwRotationFromNaturalToDisplay) % 360;
@@ -162,7 +146,7 @@ final class CameraConfigurationManager {
         return new Point(a, b);
     }
 
-    void setDesiredCameraParameters(OpenCamera camera, boolean safeMode) {
+    public void setDesiredCameraParameters(OpenCamera camera, boolean safeMode) {
 
         Camera theCamera = camera.getCamera();
         Camera.Parameters parameters = theCamera.getParameters();
@@ -178,8 +162,6 @@ final class CameraConfigurationManager {
             Log.w(TAG, "In camera config safe mode -- most settings will not be honored");
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
         initializeTorch(parameters, safeMode);
 
         CameraConfigurationUtils.setFocus(
@@ -189,17 +171,16 @@ final class CameraConfigurationManager {
                 safeMode);
 
         if (!safeMode) {
-            if (prefs.getBoolean(PreferencesActivity.KEY_INVERT_SCAN, false)) {
-                CameraConfigurationUtils.setInvertColor(parameters);
-            }
+            // 扫描黑色背景上的白色条形码。
+            // CameraConfigurationUtils.setInvertColor(parameters);
 
             CameraConfigurationUtils.setBarcodeSceneMode(parameters);
 
-            if (!prefs.getBoolean(PreferencesActivity.KEY_DISABLE_METERING, true)) {
-                CameraConfigurationUtils.setVideoStabilization(parameters);
-                CameraConfigurationUtils.setFocusArea(parameters);
-                CameraConfigurationUtils.setMetering(parameters);
-            }
+            // 无计量
+            // preferences_disable_metering
+//             CameraConfigurationUtils.setVideoStabilization(parameters);
+//             CameraConfigurationUtils.setFocusArea(parameters);
+//             CameraConfigurationUtils.setMetering(parameters);
 
         }
 
@@ -227,11 +208,11 @@ final class CameraConfigurationManager {
         return previewSizeOnScreen;
     }
 
-    Point getCameraResolution() {
+    public Point getCameraResolution() {
         return cameraResolution;
     }
 
-    Point getScreenResolution() {
+    public Point getScreenResolution() {
         return screenResolution;
     }
 
@@ -239,7 +220,7 @@ final class CameraConfigurationManager {
         return cwNeededRotation;
     }
 
-    boolean getTorchState(Camera camera) {
+    public boolean getTorchState(Camera camera) {
         if (camera != null) {
             Camera.Parameters parameters = camera.getParameters();
             if (parameters != null) {
@@ -252,7 +233,7 @@ final class CameraConfigurationManager {
         return false;
     }
 
-    void setTorch(Camera camera, boolean newSetting) {
+    public void setTorch(Camera camera, boolean newSetting) {
         Camera.Parameters parameters = camera.getParameters();
         doSetTorch(parameters, newSetting, false);
         camera.setParameters(parameters);
@@ -265,8 +246,10 @@ final class CameraConfigurationManager {
     private void doSetTorch(Camera.Parameters parameters, boolean newSetting, boolean safeMode) {
         CameraConfigurationUtils.setTorch(parameters, newSetting);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (!safeMode && !prefs.getBoolean(PreferencesActivity.KEY_DISABLE_EXPOSURE, true)) {
-            CameraConfigurationUtils.setBestExposure(parameters, newSetting);
+        if (!safeMode) {
+            // 是否需要强曝光
+            // preferences_disable_metering
+//            CameraConfigurationUtils.setBestExposure(parameters, newSetting);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.duke.zxinglib.setting;
+package com.duke.zxinglib.settings;
 
 /**
  * author: duke

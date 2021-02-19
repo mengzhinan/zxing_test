@@ -18,16 +18,12 @@ package com.duke.zxinglib.decode;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -37,7 +33,6 @@ import android.widget.TextView;
 
 import com.duke.zxinglib.R;
 import com.duke.zxinglib.camera.CameraManager;
-import com.duke.zxinglib.setting.PreferencesActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
@@ -176,27 +171,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.capture, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_settings) {
-            intent.setClassName(this, PreferencesActivity.class.getName());
-            startActivity(intent);
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
     }
 
     @Override
