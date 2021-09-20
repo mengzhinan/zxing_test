@@ -49,7 +49,7 @@ import java.util.Map;
  * {@link #initiateScan()} method will prompt the user to download the application, if needed.</p>
  *
  * <p>There are a few steps to using this integration. First, your {@link Activity} must implement
- * the method {@link Activity#onActivityResult(int, int, Intent)} and include a line of code like this:</p>
+ * the method {@link Activity onActivityResult(int, int, Intent)} and include a line of code like this:</p>
  *
  * <pre>{@code
  * public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -73,7 +73,7 @@ import java.util.Map;
  *
  * <p>Note that {@link #initiateScan()} returns an {@link AlertDialog} which is non-null if the
  * user was prompted to download the application. This lets the calling app potentially manage the dialog.
- * In particular, ideally, the app dismisses the dialog if it's still active in its {@link Activity#onPause()}
+ * In particular, ideally, the app dismisses the dialog if it's still active in its {@link Activity onPause()}
  * method.</p>
  *
  * <p>You can use {@link #setTitle(String)} to customize the title of this download prompt dialog (or, use
@@ -408,16 +408,16 @@ public class IntentIntegrator {
 
   /**
    * <p>Call this from your {@link Activity}'s
-   * {@link Activity#onActivityResult(int, int, Intent)} method.</p>
+   * {@link Activity onActivityResult(int, int, Intent)} method.</p>
    *
    * @param requestCode request code from {@code onActivityResult()}
    * @param resultCode result code from {@code onActivityResult()}
    * @param intent {@link Intent} from {@code onActivityResult()}
    * @return null if the event handled here was not related to this class, or
-   *  else an {@link com.google.zxing.integration.android.IntentResult} containing the result of the scan. If the user cancelled scanning,
+   *  else an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
    *  the fields will be null.
    */
-  public static com.google.zxing.integration.android.IntentResult parseActivityResult(int requestCode, int resultCode, Intent intent) {
+  public static IntentResult parseActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == REQUEST_CODE) {
       if (resultCode == Activity.RESULT_OK) {
         String contents = intent.getStringExtra("SCAN_RESULT");
@@ -426,13 +426,13 @@ public class IntentIntegrator {
         int intentOrientation = intent.getIntExtra("SCAN_RESULT_ORIENTATION", Integer.MIN_VALUE);
         Integer orientation = intentOrientation == Integer.MIN_VALUE ? null : intentOrientation;
         String errorCorrectionLevel = intent.getStringExtra("SCAN_RESULT_ERROR_CORRECTION_LEVEL");
-        return new com.google.zxing.integration.android.IntentResult(contents,
+        return new IntentResult(contents,
                                 formatName,
                                 rawBytes,
                                 orientation,
                                 errorCorrectionLevel);
       }
-      return new com.google.zxing.integration.android.IntentResult();
+      return new IntentResult();
     }
     return null;
   }
