@@ -4,13 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk 30
+
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdk 22
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -39,4 +40,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation "com.google.zxing:core:3.4.1"
+    implementation "com.google.zxing:android-core:3.3.0"
+
 }
