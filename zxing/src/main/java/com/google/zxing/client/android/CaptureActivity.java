@@ -16,22 +16,6 @@
 
 package com.google.zxing.client.android;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.Result;
-import com.google.zxing.ResultMetadataType;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.client.android.camera.CameraManager;
-import com.google.zxing.client.android.clipboard.ClipboardInterface;
-import com.google.zxing.client.android.history.HistoryActivity;
-import com.google.zxing.client.android.history.HistoryItem;
-import com.google.zxing.client.android.history.HistoryManager;
-import com.google.zxing.client.android.result.ResultButtonListener;
-import com.google.zxing.client.android.result.ResultHandler;
-import com.google.zxing.client.android.result.ResultHandlerFactory;
-import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
-import com.google.zxing.client.android.share.ShareActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -63,6 +47,22 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.Result;
+import com.google.zxing.ResultMetadataType;
+import com.google.zxing.ResultPoint;
+import com.google.zxing.client.android.camera.CameraManager;
+import com.google.zxing.client.android.clipboard.ClipboardInterface;
+import com.google.zxing.client.android.history.HistoryActivity;
+import com.google.zxing.client.android.history.HistoryItem;
+import com.google.zxing.client.android.history.HistoryManager;
+import com.google.zxing.client.android.result.ResultButtonListener;
+import com.google.zxing.client.android.result.ResultHandler;
+import com.google.zxing.client.android.result.ResultHandlerFactory;
+import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
+import com.google.zxing.client.android.share.ShareActivity;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -362,25 +362,21 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intents.FLAG_NEW_DOC);
-        switch (item.getItemId()) {
-            case R.id.menu_share:
-                intent.setClassName(this, ShareActivity.class.getName());
-                startActivity(intent);
-                break;
-            case R.id.menu_history:
-                intent.setClassName(this, HistoryActivity.class.getName());
-                startActivityForResult(intent, HISTORY_REQUEST_CODE);
-                break;
-            case R.id.menu_settings:
-                intent.setClassName(this, PreferencesActivity.class.getName());
-                startActivity(intent);
-                break;
-            case R.id.menu_help:
-                intent.setClassName(this, HelpActivity.class.getName());
-                startActivity(intent);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_share) {
+            intent.setClassName(this, ShareActivity.class.getName());
+            startActivity(intent);
+        } else if (itemId == R.id.menu_history) {
+            intent.setClassName(this, HistoryActivity.class.getName());
+            startActivityForResult(intent, HISTORY_REQUEST_CODE);
+        } else if (itemId == R.id.menu_settings) {
+            intent.setClassName(this, PreferencesActivity.class.getName());
+            startActivity(intent);
+        } else if (itemId == R.id.menu_help) {
+            intent.setClassName(this, HelpActivity.class.getName());
+            startActivity(intent);
+        } else {
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }
