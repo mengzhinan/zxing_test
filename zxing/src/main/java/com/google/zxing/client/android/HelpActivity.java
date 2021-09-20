@@ -28,37 +28,37 @@ import android.webkit.WebView;
  */
 public final class HelpActivity extends Activity {
 
-  private static final String BASE_URL =
-      "file:///android_asset/html-" + LocaleManager.getTranslatedAssetLanguage() + '/';
+    private static final String BASE_URL =
+            "file:///android_asset/html-" + LocaleManager.getTranslatedAssetLanguage() + '/';
 
-  private WebView webView;
+    private WebView webView;
 
-  @Override
-  protected void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
-    setContentView(R.layout.help);
+    @Override
+    protected void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        setContentView(R.layout.help);
 
-    webView = (WebView) findViewById(R.id.help_contents);
+        webView = (WebView) findViewById(R.id.help_contents);
 
-    if (icicle == null) {
-      webView.loadUrl(BASE_URL + "index.html");
-    } else {
-      webView.restoreState(icicle);
+        if (icicle == null) {
+            webView.loadUrl(BASE_URL + "index.html");
+        } else {
+            webView.restoreState(icicle);
+        }
     }
-  }
 
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-      webView.goBack();
-      return true;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
-    return super.onKeyDown(keyCode, event);
-  }
 
-  @Override
-  protected void onSaveInstanceState(Bundle icicle) {
-    super.onSaveInstanceState(icicle);
-    webView.saveState(icicle);
-  }
+    @Override
+    protected void onSaveInstanceState(Bundle icicle) {
+        super.onSaveInstanceState(icicle);
+        webView.saveState(icicle);
+    }
 }

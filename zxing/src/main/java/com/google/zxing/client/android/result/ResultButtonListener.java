@@ -25,16 +25,17 @@ import android.view.View;
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class ResultButtonListener implements View.OnClickListener {
-  private final ResultHandler resultHandler;
-  private final int index;
 
-  public ResultButtonListener(ResultHandler resultHandler, int index) {
-    this.resultHandler = resultHandler;
-    this.index = index;
-  }
+    private final ResultHandler resultHandler;
+    private final int index;
 
-  @Override
-  public void onClick(View view) {
-    resultHandler.handleButtonPress(index);
-  }
+    public ResultButtonListener(ResultHandler resultHandler, int index) {
+        this.resultHandler = resultHandler;
+        this.index = index;
+    }
+
+    @Override
+    public void onClick(View view) {
+        resultHandler.handleButtonPress(index);
+    }
 }

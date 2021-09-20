@@ -16,11 +16,11 @@
 
 package com.google.zxing.client.android.result;
 
+import android.app.Activity;
+
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.SMSParsedResult;
-
-import android.app.Activity;
 
 /**
  * Handles SMS addresses, offering a choice of composing a new SMS or MMS message.
@@ -28,57 +28,58 @@ import android.app.Activity;
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class SMSResultHandler extends ResultHandler {
-  private static final int[] buttons = {
-      R.string.button_sms,
-      R.string.button_mms
-  };
 
-  public SMSResultHandler(Activity activity, ParsedResult result) {
-    super(activity, result);
-  }
+    private static final int[] buttons = {
+            R.string.button_sms,
+            R.string.button_mms
+    };
 
-  @Override
-  public int getButtonCount() {
-    return buttons.length;
-  }
-
-  @Override
-  public int getButtonText(int index) {
-    return buttons[index];
-  }
-
-  @Override
-  public void handleButtonPress(int index) {
-    SMSParsedResult smsResult = (SMSParsedResult) getResult();
-    String number = smsResult.getNumbers()[0];
-    switch (index) {
-      case 0:
-        // Don't know of a way yet to express a SENDTO intent with multiple recipients
-        sendSMS(number, smsResult.getBody());
-        break;
-      case 1:
-        sendMMS(number, smsResult.getSubject(), smsResult.getBody());
-        break;
+    public SMSResultHandler(Activity activity, ParsedResult result) {
+        super(activity, result);
     }
-  }
 
-  @Override
-  public CharSequence getDisplayContents() {
-    SMSParsedResult smsResult = (SMSParsedResult) getResult();
-    String[] rawNumbers = smsResult.getNumbers();
-    String[] formattedNumbers = new String[rawNumbers.length];
-    for (int i = 0; i < rawNumbers.length; i++) {
-      formattedNumbers[i] = formatPhone(rawNumbers[i]);
+    @Override
+    public int getButtonCount() {
+        return buttons.length;
     }
-    StringBuilder contents = new StringBuilder(50);
-    ParsedResult.maybeAppend(formattedNumbers, contents);
-    ParsedResult.maybeAppend(smsResult.getSubject(), contents);
-    ParsedResult.maybeAppend(smsResult.getBody(), contents);
-    return contents.toString();
-  }
 
-  @Override
-  public int getDisplayTitle() {
-    return R.string.result_sms;
-  }
+    @Override
+    public int getButtonText(int index) {
+        return buttons[index];
+    }
+
+    @Override
+    public void handleButtonPress(int index) {
+        SMSParsedResult smsResult = (SMSParsedResult) getResult();
+        String number = smsResult.getNumbers()[0];
+        switch (index) {
+            case 0:
+                // Don't know of a way yet to express a SENDTO intent with multiple recipients
+                sendSMS(number, smsResult.getBody());
+                break;
+            case 1:
+                sendMMS(number, smsResult.getSubject(), smsResult.getBody());
+                break;
+        }
+    }
+
+    @Override
+    public CharSequence getDisplayContents() {
+        SMSParsedResult smsResult = (SMSParsedResult) getResult();
+        String[] rawNumbers = smsResult.getNumbers();
+        String[] formattedNumbers = new String[rawNumbers.length];
+        for (int i = 0; i < rawNumbers.length; i++) {
+            formattedNumbers[i] = formatPhone(rawNumbers[i]);
+        }
+        StringBuilder contents = new StringBuilder(50);
+        ParsedResult.maybeAppend(formattedNumbers, contents);
+        ParsedResult.maybeAppend(smsResult.getSubject(), contents);
+        ParsedResult.maybeAppend(smsResult.getBody(), contents);
+        return contents.toString();
+    }
+
+    @Override
+    public int getDisplayTitle() {
+        return R.string.result_sms;
+    }
 }

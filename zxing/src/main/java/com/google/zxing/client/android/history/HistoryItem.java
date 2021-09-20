@@ -23,31 +23,31 @@ import com.google.zxing.Result;
  */
 public final class HistoryItem {
 
-  private final Result result;
-  private final String display;
-  private final String details;
-  
-  HistoryItem(Result result, String display, String details) {
-    this.result = result;
-    this.display = display;
-    this.details = details;
-  }
+    private final Result result;
+    private final String display;
+    private final String details;
 
-  public Result getResult() {
-    return result;
-  }
+    HistoryItem(Result result, String display, String details) {
+        this.result = result;
+        this.display = display;
+        this.details = details;
+    }
 
-  public String getDisplayAndDetails() {
-    StringBuilder displayResult = new StringBuilder();
-    if (display == null || display.isEmpty()) {
-      displayResult.append(result.getText());
-    } else {
-      displayResult.append(display);
+    public Result getResult() {
+        return result;
     }
-    if (details != null && !details.isEmpty()) {
-      displayResult.append(" : ").append(details);
+
+    public String getDisplayAndDetails() {
+        StringBuilder displayResult = new StringBuilder();
+        if (display == null || display.isEmpty()) {
+            displayResult.append(result.getText());
+        } else {
+            displayResult.append(display);
+        }
+        if (details != null && !details.isEmpty()) {
+            displayResult.append(" : ").append(details);
+        }
+        return displayResult.toString();
     }
-    return displayResult.toString();
-  }
-  
+
 }
