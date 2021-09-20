@@ -1,0 +1,19 @@
+1、启动后提示需要重启才能生效？
+A: 需要设置(相机)系统权限
+
+2、如何去掉桌面快捷方式？
+A: 删除 AndroidManifest.xml 中 .CaptureActivity 的 intent-filter：
+<intent-filter>
+    <action android:name="android.intent.action.MAIN" />
+    <category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+
+3、如何修复竖屏扫码时，图像变形？
+A:
+
+4、
+A:
+
+5、
+A:
+
