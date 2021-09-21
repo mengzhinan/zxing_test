@@ -49,29 +49,6 @@
             android:defaultValue="false"
             android:key="preferences_vibrate"
             android:title="@string/preferences_vibrate_title" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preferences_copy_to_clipboard"
-            android:title="@string/preferences_copy_to_clipboard_title" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="preferences_auto_open_web"
-            android:title="@string/preferences_auto_open_web_title" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="preferences_remember_duplicates"
-            android:summary="@string/preferences_remember_duplicates_summary"
-            android:title="@string/preferences_remember_duplicates_title" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preferences_history"
-            android:summary="@string/preferences_history_summary"
-            android:title="@string/preferences_history_title" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preferences_supplemental"
-            android:summary="@string/preferences_supplemental_summary"
-            android:title="@string/preferences_supplemental_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_general_title">
         <ListPreference
@@ -105,12 +82,6 @@
             android:key="preferences_custom_product_search"
             android:summary="@string/preferences_custom_product_search_summary"
             android:title="@string/preferences_custom_product_search_title" />
-        <ListPreference
-            android:defaultValue="-"
-            android:entries="@array/country_codes"
-            android:entryValues="@array/country_codes"
-            android:key="preferences_search_country"
-            android:title="@string/preferences_search_country" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_device_bug_workarounds_title">
         <CheckBoxPreference
