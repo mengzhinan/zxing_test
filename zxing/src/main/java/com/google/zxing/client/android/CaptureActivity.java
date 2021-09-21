@@ -383,7 +383,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
         inactivityTimer.onActivity();
         lastResult = rawResult;
-        ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);
+        ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(rawResult);
 
         boolean fromLiveScan = barcode != null;
         if (fromLiveScan) {

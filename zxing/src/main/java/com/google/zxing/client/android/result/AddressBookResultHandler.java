@@ -27,6 +27,7 @@ import com.google.zxing.client.result.ParsedResult;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -56,7 +57,10 @@ public final class AddressBookResultHandler extends ResultHandler {
     private static long parseDate(String s) {
         for (DateFormat currentFormat : DATE_FORMATS) {
             try {
-                return currentFormat.parse(s).getTime();
+                Date date = currentFormat.parse(s);
+                if (date != null) {
+                    return date.getTime();
+                }
             } catch (ParseException e) {
                 // continue
             }
