@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -29,7 +28,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.PreferencesActivity;
@@ -41,15 +39,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
-/**
- * <p>Manages functionality related to scan history.</p>
- *
- * @author Sean Owen
- */
 public final class HistoryManager {
 
     private static final String TAG = HistoryManager.class.getSimpleName();
@@ -77,73 +68,6 @@ public final class HistoryManager {
         this.activity = activity;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         enableHistory = prefs.getBoolean(PreferencesActivity.KEY_ENABLE_HISTORY, true);
-    }
-
-    public boolean hasHistoryItems() {
-        SQLiteOpenHelper helper = new DBHelper(activity);
-        try (SQLiteDatabase db = helper.getReadableDatabase();
-             Cursor cursor = db.query(DBHelper.TABLE_NAME, COUNT_COLUMN, null, null, null, null, null)) {
-            cursor.moveToFirst();
-            return cursor.getInt(0) > 0;
-        } catch (SQLException sqle) {
-            Log.w(TAG, sqle);
-            return false;
-        }
-    }
-
-    public List<HistoryItem> buildHistoryItems() {
-        SQLiteOpenHelper helper = new DBHelper(activity);
-        List<HistoryItem> items = new ArrayList<>();
-        try (SQLiteDatabase db = helper.getReadableDatabase();
-             Cursor cursor = db.query(DBHelper.TABLE_NAME,
-                     COLUMNS,
-                     null, null, null, null,
-                     DBHelper.TIMESTAMP_COL + " DESC")) {
-            while (cursor.moveToNext()) {
-                String text = cursor.getString(0);
-                String display = cursor.getString(1);
-                String format = cursor.getString(2);
-                long timestamp = cursor.getLong(3);
-                String details = cursor.getString(4);
-                Result result = new Result(text, null, null, BarcodeFormat.valueOf(format), timestamp);
-                items.add(new HistoryItem(result, display, details));
-            }
-        } catch (CursorIndexOutOfBoundsException cioobe) {
-            Log.w(TAG, cioobe);
-        }
-        return items;
-    }
-
-    public HistoryItem buildHistoryItem(int number) {
-        SQLiteOpenHelper helper = new DBHelper(activity);
-        try (SQLiteDatabase db = helper.getReadableDatabase();
-             Cursor cursor = db.query(DBHelper.TABLE_NAME,
-                     COLUMNS,
-                     null, null, null, null,
-                     DBHelper.TIMESTAMP_COL + " DESC")) {
-            cursor.move(number + 1);
-            String text = cursor.getString(0);
-            String display = cursor.getString(1);
-            String format = cursor.getString(2);
-            long timestamp = cursor.getLong(3);
-            String details = cursor.getString(4);
-            Result result = new Result(text, null, null, BarcodeFormat.valueOf(format), timestamp);
-            return new HistoryItem(result, display, details);
-        }
-    }
-
-    public void deleteHistoryItem(int number) {
-        SQLiteOpenHelper helper = new DBHelper(activity);
-        try (SQLiteDatabase db = helper.getWritableDatabase();
-             Cursor cursor = db.query(DBHelper.TABLE_NAME,
-                     ID_COL_PROJECTION,
-                     null, null, null, null,
-                     DBHelper.TIMESTAMP_COL + " DESC")) {
-            cursor.move(number + 1);
-            db.delete(DBHelper.TABLE_NAME, DBHelper.ID_COL + '=' + cursor.getString(0), null);
-        } catch (SQLException sqle) {
-            Log.w(TAG, sqle);
-        }
     }
 
     public void addHistoryItem(Result result, ResultHandler handler) {

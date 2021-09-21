@@ -7,9 +7,11 @@
         <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/layout/app_picker_list_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/layout/bookmark_picker_list_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/layout/help.xml" value="0.1" />
+        <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/layout/history_list_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/layout/share.xml" value="0.20520833333333333" />
         <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/menu/capture.xml" value="0.1" />
         <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/menu/encode.xml" value="0.16203703703703703" />
+        <entry key="..\:/Android_Studio_Projects_2021/zxing_test/zxing/src/main/res/menu/history.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>

@@ -55,8 +55,6 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.client.android.clipboard.ClipboardInterface;
-import com.google.zxing.client.android.history.HistoryActivity;
-import com.google.zxing.client.android.history.HistoryItem;
 import com.google.zxing.client.android.history.HistoryManager;
 import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
@@ -85,8 +83,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private static final long BULK_MODE_SCAN_DELAY_MS = 1000L;
 
     private static final String[] ZXING_URLS = {"http://zxing.appspot.com/scan", "zxing://scan/"};
-
-    private static final int HISTORY_REQUEST_CODE = 0x0000bacc;
 
     private static final Collection<ResultMetadataType> DISPLAYABLE_METADATA_TYPES =
             EnumSet.of(ResultMetadataType.ISSUE_NUMBER,
@@ -362,10 +358,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intents.FLAG_NEW_DOC);
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_history) {
-            intent.setClassName(this, HistoryActivity.class.getName());
-            startActivityForResult(intent, HISTORY_REQUEST_CODE);
-        } else if (itemId == R.id.menu_settings) {
+        if (itemId == R.id.menu_settings) {
             intent.setClassName(this, PreferencesActivity.class.getName());
             startActivity(intent);
         } else if (itemId == R.id.menu_help) {
@@ -375,17 +368,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             return super.onOptionsItemSelected(item);
         }
         return true;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (resultCode == RESULT_OK && requestCode == HISTORY_REQUEST_CODE && historyManager != null) {
-            int itemNumber = intent.getIntExtra(Intents.History.ITEM_NUMBER, -1);
-            if (itemNumber >= 0) {
-                HistoryItem historyItem = historyManager.buildHistoryItem(itemNumber);
-                decodeOrStoreSavedBitmap(null, historyItem.getResult());
-            }
-        }
     }
 
     private void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result) {
@@ -734,7 +716,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(getString(R.string.msg_camera_framework_bug));
-        builder.setPositiveButton(R.string.button_ok, new FinishListener(this));
+        builder.setPositiveButton("OK", new FinishListener(this));
         builder.setOnCancelListener(new FinishListener(this));
         builder.show();
     }
