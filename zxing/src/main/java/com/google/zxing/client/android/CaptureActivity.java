@@ -62,7 +62,6 @@ import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
 import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
-import com.google.zxing.client.android.share.ShareActivity;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -363,10 +362,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intents.FLAG_NEW_DOC);
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_share) {
-            intent.setClassName(this, ShareActivity.class.getName());
-            startActivity(intent);
-        } else if (itemId == R.id.menu_history) {
+        if (itemId == R.id.menu_history) {
             intent.setClassName(this, HistoryActivity.class.getName());
             startActivityForResult(intent, HISTORY_REQUEST_CODE);
         } else if (itemId == R.id.menu_settings) {
