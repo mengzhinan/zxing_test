@@ -30,7 +30,6 @@
   <string name="button_ok">确定</string>
   <string name="button_open_browser">打开浏览器</string>
   <string name="button_product_search">打开商品搜索</string>
-  <string name="button_search_book_contents">搜索图书内容</string>
   <string name="button_share_by_email">通过 E-mail 分享</string>
   <string name="button_share_by_sms">通过短信分享</string>
   <string name="button_show_map">显示地图</string>
@@ -61,13 +60,6 @@
   <string name="msg_intent_failed">抱歉，无法打开应用。条码内容可能无效。</string>
   <string name="msg_invalid_value">值无效</string>
   <string name="msg_redirect">重定向</string>
-  <string name="msg_sbc_book_not_searchable">抱歉，无法找到此图书。</string>
-  <string name="msg_sbc_failed">抱歉，搜索时遇到错误。</string>
-  <string name="msg_sbc_no_page_returned">无页面返回</string>
-  <string name="msg_sbc_page">页面</string>
-  <string name="msg_sbc_results">结果</string>
-  <string name="msg_sbc_searching_book">搜索图书…</string>
-  <string name="msg_sbc_snippet_unavailable">摘录不可用</string>
   <string name="msg_sure">确定吗？</string>
   <string name="msg_unmount_usb">抱歉，无法访问 SD 卡。</string>
   <string name="preferences_actions_title">扫描成功</string>
@@ -111,6 +103,5 @@
   <string name="preferences_supplemental_summary">尝试检索关于条码内容的更多信息</string>
   <string name="preferences_supplemental_title">检索更多信息</string>
   <string name="preferences_vibrate_title">振动</string>
-  <string name="sbc_name">Google 图书搜索</string>
   <string name="wifi_changing_network">连接到 Wi-Fi \u2026</string>
 </resources>
