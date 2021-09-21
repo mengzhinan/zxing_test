@@ -39,6 +39,7 @@ public final class PreferencesFragment
         extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+
     private CheckBoxPreference[] checkBoxPrefs;
 
     @Override
