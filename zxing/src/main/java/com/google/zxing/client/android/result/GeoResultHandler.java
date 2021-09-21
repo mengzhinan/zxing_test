@@ -27,8 +27,10 @@ import com.google.zxing.client.result.ParsedResult;
  */
 public final class GeoResultHandler extends ResultHandler {
 
+
     public GeoResultHandler(Activity activity, ParsedResult result) {
         super(activity, result);
     }
+
 
 }

@@ -18,7 +18,6 @@ package com.google.zxing.client.android.result;
 
 import android.app.Activity;
 
-import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
 
 /**
@@ -32,6 +31,7 @@ public final class TelResultHandler extends ResultHandler {
         super(activity, result);
     }
 
+
     // Overriden so we can take advantage of Android's phone number hyphenation routines.
     @Override
     public CharSequence getDisplayContents() {
@@ -39,5 +39,6 @@ public final class TelResultHandler extends ResultHandler {
         contents = contents.replace("\r", "");
         return formatPhone(contents);
     }
+
 
 }

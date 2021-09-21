@@ -31,4 +31,5 @@ public final class EmailAddressResultHandler extends ResultHandler {
         super(activity, result);
     }
 
+
 }

@@ -18,7 +18,6 @@ package com.google.zxing.client.android.result;
 
 import android.app.Activity;
 
-import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.CalendarParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 
@@ -31,12 +30,6 @@ import java.text.DateFormat;
  * @author Sean Owen
  */
 public final class CalendarResultHandler extends ResultHandler {
-
-    private static final String TAG = CalendarResultHandler.class.getSimpleName();
-
-    private static final int[] buttons = {
-            R.string.button_add_calendar
-    };
 
     public CalendarResultHandler(Activity activity, ParsedResult result) {
         super(activity, result);
@@ -81,5 +74,6 @@ public final class CalendarResultHandler extends ResultHandler {
                 : DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
         return format.format(date);
     }
+
 
 }

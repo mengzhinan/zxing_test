@@ -17,7 +17,6 @@
 package com.google.zxing.client.android.result;
 
 import com.google.zxing.client.android.CaptureActivity;
-import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.WifiParsedResult;
 
@@ -29,11 +28,10 @@ import com.google.zxing.client.result.WifiParsedResult;
  */
 public final class WifiResultHandler extends ResultHandler {
 
-    private static final String TAG = WifiResultHandler.class.getSimpleName();
-
     public WifiResultHandler(CaptureActivity activity, ParsedResult result) {
         super(activity, result);
     }
+
 
     // Display the name of the network and the network type to the user.
     @Override
@@ -41,5 +39,6 @@ public final class WifiResultHandler extends ResultHandler {
         WifiParsedResult wifiResult = (WifiParsedResult) getResult();
         return wifiResult.getSsid() + " (" + wifiResult.getNetworkEncryption() + ')';
     }
+
 
 }

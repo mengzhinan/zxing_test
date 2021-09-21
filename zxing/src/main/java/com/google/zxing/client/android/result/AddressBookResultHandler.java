@@ -22,7 +22,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 
-import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.AddressBookParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 
@@ -51,52 +50,8 @@ public final class AddressBookResultHandler extends ResultHandler {
         }
     }
 
-    private static final int[] BUTTON_TEXTS = {
-            R.string.button_add_contact,
-            R.string.button_show_map,
-            R.string.button_dial,
-            R.string.button_email,
-    };
-
-    private final boolean[] fields;
-    private int buttonCount;
-
-    // This takes all the work out of figuring out which buttons/actions should be in which
-    // positions, based on which fields are present in this barcode.
-    private int mapIndexToAction(int index) {
-        if (index < buttonCount) {
-            int count = -1;
-            for (int x = 0; x < MAX_BUTTON_COUNT; x++) {
-                if (fields[x]) {
-                    count++;
-                }
-                if (count == index) {
-                    return x;
-                }
-            }
-        }
-        return -1;
-    }
-
     public AddressBookResultHandler(Activity activity, ParsedResult result) {
         super(activity, result);
-        AddressBookParsedResult addressResult = (AddressBookParsedResult) result;
-        String[] addresses = addressResult.getAddresses();
-        String[] phoneNumbers = addressResult.getPhoneNumbers();
-        String[] emails = addressResult.getEmails();
-
-        fields = new boolean[MAX_BUTTON_COUNT];
-        fields[0] = true; // Add contact is always available
-        fields[1] = addresses != null && addresses.length > 0 && addresses[0] != null && !addresses[0].isEmpty();
-        fields[2] = phoneNumbers != null && phoneNumbers.length > 0;
-        fields[3] = emails != null && emails.length > 0;
-
-        buttonCount = 0;
-        for (int x = 0; x < MAX_BUTTON_COUNT; x++) {
-            if (fields[x]) {
-                buttonCount++;
-            }
-        }
     }
 
     private static long parseDate(String s) {

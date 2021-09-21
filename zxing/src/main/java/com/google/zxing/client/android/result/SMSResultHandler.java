@@ -32,6 +32,7 @@ public final class SMSResultHandler extends ResultHandler {
         super(activity, result);
     }
 
+
     @Override
     public CharSequence getDisplayContents() {
         SMSParsedResult smsResult = (SMSParsedResult) getResult();
