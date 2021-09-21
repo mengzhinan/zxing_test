@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.google.zxing.client.android.PreferencesActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.RejectedExecutionException;
@@ -68,7 +69,7 @@ final class AutoFocusManager implements Camera.AutoFocusCallback {
 
     private synchronized void autoFocusAgainLater() {
         if (!stopped && outstandingTask == null) {
-            AutoFocusTask newTask = new AutoFocusTask();
+            AutoFocusTask newTask = new AutoFocusTask(this);
             try {
                 newTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 outstandingTask = newTask;
@@ -118,7 +119,13 @@ final class AutoFocusManager implements Camera.AutoFocusCallback {
         }
     }
 
-    private final class AutoFocusTask extends AsyncTask<Object, Object, Object> {
+    private static final class AutoFocusTask extends AsyncTask<Object, Object, Object> {
+        private final WeakReference<AutoFocusManager> weakReference;
+
+        private AutoFocusTask(AutoFocusManager autoFocusManager) {
+            weakReference = new WeakReference<>(autoFocusManager);
+        }
+
         @Override
         protected Object doInBackground(Object... voids) {
             try {
@@ -126,7 +133,12 @@ final class AutoFocusManager implements Camera.AutoFocusCallback {
             } catch (InterruptedException e) {
                 // continue
             }
-            start();
+            if (weakReference != null) {
+                AutoFocusManager autoFocusManager = weakReference.get();
+                if (autoFocusManager != null) {
+                    autoFocusManager.start();
+                }
+            }
             return null;
         }
     }

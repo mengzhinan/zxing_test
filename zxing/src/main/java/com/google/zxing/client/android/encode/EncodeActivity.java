@@ -37,8 +37,6 @@ import com.google.zxing.client.android.FinishListener;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
 
-import java.util.regex.Pattern;
-
 /**
  * This class encodes data from an Intent into a QR code, and then displays it full screen so that
  * another person can scan it with their device.
@@ -49,8 +47,6 @@ public final class EncodeActivity extends Activity {
 
     private static final String TAG = EncodeActivity.class.getSimpleName();
 
-    private static final int MAX_BARCODE_FILENAME_LENGTH = 24;
-    private static final Pattern NOT_ALPHANUMERIC = Pattern.compile("[^A-Za-z0-9]");
     private static final String USE_VCARD_KEY = "USE_VCARD";
 
     private QRCodeEncoder qrCodeEncoder;
@@ -133,10 +129,10 @@ public final class EncodeActivity extends Activity {
                 return;
             }
 
-            ImageView view = (ImageView) findViewById(R.id.image_view);
+            ImageView view = findViewById(R.id.image_view);
             view.setImageBitmap(bitmap);
 
-            TextView contents = (TextView) findViewById(R.id.contents_text_view);
+            TextView contents = findViewById(R.id.contents_text_view);
             if (intent.getBooleanExtra(Intents.Encode.SHOW_CONTENTS, true)) {
                 contents.setText(qrCodeEncoder.getDisplayContents());
                 setTitle(qrCodeEncoder.getTitle());

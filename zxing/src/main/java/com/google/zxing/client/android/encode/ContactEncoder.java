@@ -23,8 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Implementations encode according to some scheme for encoding contact information, like VCard or
- * MECARD.
+ * Implementations encode according to some scheme
+ * for encoding contact information, like VCard or MECARD.
  *
  * @author Sean Owen
  */

@@ -28,10 +28,6 @@ final class VCardTelDisplayFormatter implements Formatter {
 
     private final List<Map<String, Set<String>>> metadataForIndex;
 
-    VCardTelDisplayFormatter() {
-        this(null);
-    }
-
     VCardTelDisplayFormatter(List<Map<String, Set<String>>> metadataForIndex) {
         this.metadataForIndex = metadataForIndex;
     }
