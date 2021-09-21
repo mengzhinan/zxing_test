@@ -466,8 +466,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     // Put up our own UI for how to handle the decoded contents.
     private void handleDecodeInternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         viewfinderView.setVisibility(View.GONE);
         resultView.setVisibility(View.VISIBLE);
 

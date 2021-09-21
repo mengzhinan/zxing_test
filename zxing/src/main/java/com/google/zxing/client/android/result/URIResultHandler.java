@@ -16,14 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
-import android.app.Activity;
-
-import com.google.zxing.client.android.LocaleManager;
-import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
-import com.google.zxing.client.result.URIParsedResult;
-
-import java.util.Locale;
 
 /**
  * Offers appropriate actions for URLS.
@@ -33,8 +26,8 @@ import java.util.Locale;
 public final class URIResultHandler extends ResultHandler {
 
 
-    public URIResultHandler(Activity activity, ParsedResult result) {
-        super(activity, result);
+    public URIResultHandler(ParsedResult result) {
+        super(result);
     }
 
 

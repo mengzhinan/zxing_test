@@ -16,8 +16,6 @@
 
 package com.google.zxing.client.android.result;
 
-import android.app.Activity;
-
 import com.google.zxing.client.result.CalendarParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 
@@ -31,8 +29,8 @@ import java.text.DateFormat;
  */
 public final class CalendarResultHandler extends ResultHandler {
 
-    public CalendarResultHandler(Activity activity, ParsedResult result) {
-        super(activity, result);
+    public CalendarResultHandler(ParsedResult result) {
+        super(result);
     }
 
     @Override

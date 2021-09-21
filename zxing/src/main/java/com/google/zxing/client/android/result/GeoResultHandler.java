@@ -16,8 +16,6 @@
 
 package com.google.zxing.client.android.result;
 
-import android.app.Activity;
-
 import com.google.zxing.client.result.ParsedResult;
 
 /**
@@ -28,8 +26,8 @@ import com.google.zxing.client.result.ParsedResult;
 public final class GeoResultHandler extends ResultHandler {
 
 
-    public GeoResultHandler(Activity activity, ParsedResult result) {
-        super(activity, result);
+    public GeoResultHandler(ParsedResult result) {
+        super(result);
     }
 
 

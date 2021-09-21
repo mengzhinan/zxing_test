@@ -35,27 +35,27 @@ public final class ResultHandlerFactory {
         ParsedResult result = parseResult(rawResult);
         switch (result.getType()) {
             case ADDRESSBOOK:
-                return new AddressBookResultHandler(activity, result);
+                return new AddressBookResultHandler(result);
             case EMAIL_ADDRESS:
-                return new EmailAddressResultHandler(activity, result);
+                return new EmailAddressResultHandler(result);
             case PRODUCT:
-                return new ProductResultHandler(activity, result, rawResult);
+                return new ProductResultHandler(result);
             case URI:
-                return new URIResultHandler(activity, result);
+                return new URIResultHandler(result);
             case WIFI:
-                return new WifiResultHandler(activity, result);
+                return new WifiResultHandler(result);
             case GEO:
-                return new GeoResultHandler(activity, result);
+                return new GeoResultHandler(result);
             case TEL:
-                return new TelResultHandler(activity, result);
+                return new TelResultHandler(result);
             case SMS:
-                return new SMSResultHandler(activity, result);
+                return new SMSResultHandler(result);
             case CALENDAR:
-                return new CalendarResultHandler(activity, result);
+                return new CalendarResultHandler(result);
             case ISBN:
-                return new ISBNResultHandler(activity, result, rawResult);
+                return new ISBNResultHandler(result);
             default:
-                return new TextResultHandler(activity, result, rawResult);
+                return new TextResultHandler(result);
         }
     }
 

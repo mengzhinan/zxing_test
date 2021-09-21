@@ -16,7 +16,6 @@
 
 package com.google.zxing.client.android.result;
 
-import android.app.Activity;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -50,8 +49,8 @@ public final class AddressBookResultHandler extends ResultHandler {
         }
     }
 
-    public AddressBookResultHandler(Activity activity, ParsedResult result) {
-        super(activity, result);
+    public AddressBookResultHandler(ParsedResult result) {
+        super(result);
     }
 
     private static long parseDate(String s) {

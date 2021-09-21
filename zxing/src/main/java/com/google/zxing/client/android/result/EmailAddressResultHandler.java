@@ -27,8 +27,8 @@ import com.google.zxing.client.result.ParsedResult;
  */
 public final class EmailAddressResultHandler extends ResultHandler {
 
-    public EmailAddressResultHandler(Activity activity, ParsedResult result) {
-        super(activity, result);
+    public EmailAddressResultHandler(ParsedResult result) {
+        super(result);
     }
 
 
