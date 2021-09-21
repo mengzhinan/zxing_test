@@ -9,7 +9,20 @@ A: 删除 AndroidManifest.xml 中 .CaptureActivity 的 intent-filter：
 </intent-filter>
 
 3、如何修复竖屏扫码时，图像变形？
-A:
+A: 修改代码 CameraConfigurationManager.initFromCameraParameters(OpenCamera camera)
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// 交换大小，修复预览图像拉伸
+Point newPoint = repairVerticalPreviewStretch(screenResolution);
+
+// Log.i(TAG, "Screen resolution in current orientation: " + screenResolution);
+// cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
+
+// Log.i(TAG, "Camera resolution: " + cameraResolution);
+// bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
+Log.i(TAG, "Best available preview size: " + bestPreviewSize);
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 4、
 A:
