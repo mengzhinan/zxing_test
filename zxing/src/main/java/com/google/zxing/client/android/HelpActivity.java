@@ -38,7 +38,7 @@ public final class HelpActivity extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.help);
 
-        webView = (WebView) findViewById(R.id.help_contents);
+        webView = findViewById(R.id.help_contents);
 
         if (icicle == null) {
             webView.loadUrl(BASE_URL + "index.html");

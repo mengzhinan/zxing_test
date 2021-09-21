@@ -110,10 +110,4 @@ public final class Contents {
             ContactsContract.Intents.Insert.TERTIARY_EMAIL
     };
 
-    public static final String[] EMAIL_TYPE_KEYS = {
-            ContactsContract.Intents.Insert.EMAIL_TYPE,
-            ContactsContract.Intents.Insert.SECONDARY_EMAIL_TYPE,
-            ContactsContract.Intents.Insert.TERTIARY_EMAIL_TYPE
-    };
-
 }
