@@ -91,7 +91,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private View resultView;
     private Result lastResult;
     private boolean hasSurface;
-    private boolean copyToClipboard;
     private IntentSource source;
     private String sourceUrl;
     private ScanFromWebPageManager scanFromWebPageManager;
@@ -140,7 +139,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         // off screen.
         cameraManager = new CameraManager(getApplication());
 
-        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+        viewfinderView = findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
 
         resultView = findViewById(R.id.result_view);
@@ -165,9 +164,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         inactivityTimer.onResume();
 
         Intent intent = getIntent();
-
-        copyToClipboard = prefs.getBoolean(PreferencesActivity.KEY_COPY_TO_CLIPBOARD, true)
-                && (intent == null || intent.getBooleanExtra(Intents.Scan.SAVE_HISTORY, true));
 
         source = IntentSource.NONE;
         sourceUrl = null;
@@ -229,7 +225,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         }
 
-        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+        SurfaceView surfaceView = findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
         if (hasSurface) {
             // The activity was paused but not stopped, so the surface still exists. Therefore
@@ -248,6 +244,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 case Surface.ROTATION_0:
                 case Surface.ROTATION_90:
                     return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                case Surface.ROTATION_180:
+                case Surface.ROTATION_270:
                 default:
                     return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
             }
@@ -256,6 +254,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 case Surface.ROTATION_0:
                 case Surface.ROTATION_270:
                     return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                case Surface.ROTATION_180:
+                case Surface.ROTATION_90:
                 default:
                     return ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
             }
@@ -286,7 +286,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         cameraManager.closeDriver();
         //historyManager = null; // Keep for onActivityResult
         if (!hasSurface) {
-            SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+            SurfaceView surfaceView = findViewById(R.id.preview_view);
             SurfaceHolder surfaceHolder = surfaceView.getHolder();
             surfaceHolder.removeCallback(this);
         }
@@ -468,7 +468,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         viewfinderView.setVisibility(View.GONE);
         resultView.setVisibility(View.VISIBLE);
 
-        ImageView barcodeImageView = (ImageView) findViewById(R.id.barcode_image_view);
+        ImageView barcodeImageView = findViewById(R.id.barcode_image_view);
         if (barcode == null) {
             barcodeImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
                     R.drawable.launcher_icon));
@@ -476,18 +476,18 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             barcodeImageView.setImageBitmap(barcode);
         }
 
-        TextView formatTextView = (TextView) findViewById(R.id.format_text_view);
+        TextView formatTextView = findViewById(R.id.format_text_view);
         formatTextView.setText(rawResult.getBarcodeFormat().toString());
 
-        TextView typeTextView = (TextView) findViewById(R.id.type_text_view);
+        TextView typeTextView = findViewById(R.id.type_text_view);
         typeTextView.setText(resultHandler.getType().toString());
 
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-        TextView timeTextView = (TextView) findViewById(R.id.time_text_view);
+        TextView timeTextView = findViewById(R.id.time_text_view);
         timeTextView.setText(formatter.format(rawResult.getTimestamp()));
 
 
-        TextView metaTextView = (TextView) findViewById(R.id.meta_text_view);
+        TextView metaTextView = findViewById(R.id.meta_text_view);
         View metaTextViewLabel = findViewById(R.id.meta_text_view_label);
         metaTextView.setVisibility(View.GONE);
         metaTextViewLabel.setVisibility(View.GONE);
@@ -508,12 +508,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
 
         CharSequence displayContents = resultHandler.getDisplayContents();
-        TextView contentsTextView = (TextView) findViewById(R.id.contents_text_view);
+        TextView contentsTextView = findViewById(R.id.contents_text_view);
         contentsTextView.setText(displayContents);
         int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
         contentsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
 
-        TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
+        TextView supplementTextView = findViewById(R.id.contents_supplement_text_view);
         supplementTextView.setText("");
         supplementTextView.setOnClickListener(null);
 
@@ -538,7 +538,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             case NATIVE_APP_INTENT:
                 // Hand back whatever action they requested - this can be changed to Intents.Scan.ACTION when
                 // the deprecated intent is retired.
-                Intent intent = new Intent(getIntent().getAction());
+                Intent oldIntent = getIntent();
+                String oldAction = "";
+                if (oldIntent != null) {
+                    oldAction = oldIntent.getAction();
+                }
+                Intent intent = new Intent(oldAction);
                 intent.addFlags(Intents.FLAG_NEW_DOC);
                 intent.putExtra(Intents.Scan.RESULT, rawResult.toString());
                 intent.putExtra(Intents.Scan.RESULT_FORMAT, rawResult.getBarcodeFormat().toString());
@@ -549,8 +554,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 Map<ResultMetadataType, ?> metadata = rawResult.getResultMetadata();
                 if (metadata != null) {
                     if (metadata.containsKey(ResultMetadataType.UPC_EAN_EXTENSION)) {
-                        intent.putExtra(Intents.Scan.RESULT_UPC_EAN_EXTENSION,
-                                metadata.get(ResultMetadataType.UPC_EAN_EXTENSION).toString());
+                        Object resultObj = metadata.get(ResultMetadataType.UPC_EAN_EXTENSION);
+                        if (resultObj != null) {
+                            intent.putExtra(Intents.Scan.RESULT_UPC_EAN_EXTENSION, resultObj.toString());
+                        }
                     }
                     Number orientation = (Number) metadata.get(ResultMetadataType.ORIENTATION);
                     if (orientation != null) {
