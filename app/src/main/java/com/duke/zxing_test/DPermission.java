@@ -39,7 +39,7 @@ public class DPermission {
 
     private static final String TAG_FRAGMENT = String.valueOf(DPermission.class.getName().hashCode());
 
-    private WeakReference<DFragment> mFragmentWeakReference;
+    private final WeakReference<DFragment> mFragmentWeakReference;
 
     private DCallback mDCallback;
 

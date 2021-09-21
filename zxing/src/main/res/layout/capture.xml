@@ -18,26 +18,26 @@
 
     <SurfaceView
         android:id="@+id/preview_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.zxing.client.android.ViewfinderView
         android:id="@+id/viewfinder_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/result_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/result_view"
         android:baselineAligned="false"
         android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
@@ -45,8 +45,8 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="right|center_vertical"
+                android:layout_height="match_parent"
+                android:gravity="end|center_vertical"
                 android:orientation="vertical">
 
                 <ImageView
@@ -68,10 +68,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/half_padding"
+                        android:paddingEnd="@dimen/half_padding"
                         android:text="@string/msg_default_format"
                         android:textColor="@color/result_minor_text"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/format_text_view"
@@ -89,10 +90,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/half_padding"
+                        android:paddingEnd="@dimen/half_padding"
                         android:text="@string/msg_default_type"
                         android:textColor="@color/result_minor_text"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/type_text_view"
@@ -110,10 +112,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/half_padding"
+                        android:paddingEnd="@dimen/half_padding"
                         android:text="@string/msg_default_time"
                         android:textColor="@color/result_minor_text"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/time_text_view"
@@ -132,10 +135,11 @@
                         android:id="@+id/meta_text_view_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/half_padding"
+                        android:paddingEnd="@dimen/half_padding"
                         android:text="@string/msg_default_meta"
                         android:textColor="@color/result_minor_text"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/meta_text_view"
@@ -161,21 +165,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:autoLink="web"
-                        android:paddingLeft="12dip"
+                        android:paddingStart="12dip"
                         android:textColor="@color/result_text"
                         android:textColorLink="@color/result_text"
                         android:textIsSelectable="true"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"
+                        tools:ignore="RtlSymmetry" />
 
                     <TextView
                         android:id="@+id/contents_supplement_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:autoLink="web"
-                        android:paddingLeft="12dip"
+                        android:paddingStart="12dp"
                         android:textColor="@color/result_text"
                         android:textColorLink="@color/result_text"
-                        android:textIsSelectable="true" />
+                        android:textIsSelectable="true"
+                        tools:ignore="RtlSymmetry" />
 
                 </LinearLayout>
 
