@@ -41,7 +41,6 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -54,8 +53,6 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
-import com.google.zxing.client.android.clipboard.ClipboardInterface;
-import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
 import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
@@ -92,7 +89,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
-    private TextView statusView;
     private View resultView;
     private Result lastResult;
     private boolean hasSurface;
@@ -149,7 +145,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         viewfinderView.setCameraManager(cameraManager);
 
         resultView = findViewById(R.id.result_view);
-        statusView = (TextView) findViewById(R.id.status_view);
 
         handler = null;
         lastResult = null;
@@ -206,11 +201,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     if (cameraId >= 0) {
                         cameraManager.setManualCameraId(cameraId);
                     }
-                }
-
-                String customPromptMessage = intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE);
-                if (customPromptMessage != null) {
-                    statusView.setText(customPromptMessage);
                 }
 
             } else if (dataString != null &&
@@ -421,7 +411,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.msg_bulk_mode_scanned) + " (" + rawResult.getText() + ')',
                             Toast.LENGTH_SHORT).show();
-                    maybeSetClipboard(resultHandler);
                     // Wait a moment or else it will scan the same barcode continuously about 3 times
                     restartPreviewAfterDelay(BULK_MODE_SCAN_DELAY_MS);
                 } else {
@@ -477,16 +466,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     // Put up our own UI for how to handle the decoded contents.
     private void handleDecodeInternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
 
-        maybeSetClipboard(resultHandler);
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (resultHandler.getDefaultButtonID() != null && prefs.getBoolean(PreferencesActivity.KEY_AUTO_OPEN_WEB, false)) {
-            resultHandler.handleButtonPress(resultHandler.getDefaultButtonID());
-            return;
-        }
-
-        statusView.setVisibility(View.GONE);
         viewfinderView.setVisibility(View.GONE);
         resultView.setVisibility(View.VISIBLE);
 
@@ -545,20 +526,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     this);
         }
 
-        int buttonCount = resultHandler.getButtonCount();
-        ViewGroup buttonView = (ViewGroup) findViewById(R.id.result_button_view);
-        buttonView.requestFocus();
-        for (int x = 0; x < ResultHandler.MAX_BUTTON_COUNT; x++) {
-            TextView button = (TextView) buttonView.getChildAt(x);
-            if (x < buttonCount) {
-                button.setVisibility(View.VISIBLE);
-                button.setText(resultHandler.getButtonText(x));
-                button.setOnClickListener(new ResultButtonListener(resultHandler, x));
-            } else {
-                button.setVisibility(View.GONE);
-            }
-        }
-
     }
 
     // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.
@@ -575,16 +542,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             resultDurationMS = getIntent().getLongExtra(Intents.Scan.RESULT_DISPLAY_DURATION_MS,
                     DEFAULT_INTENT_RESULT_DURATION_MS);
         }
-
-        if (resultDurationMS > 0) {
-            String rawResultString = String.valueOf(rawResult);
-            if (rawResultString.length() > 32) {
-                rawResultString = rawResultString.substring(0, 32) + " ...";
-            }
-            statusView.setText(getString(resultHandler.getDisplayTitle()) + " : " + rawResultString);
-        }
-
-        maybeSetClipboard(resultHandler);
 
         switch (source) {
             case NATIVE_APP_INTENT:
@@ -644,12 +601,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
     }
 
-    private void maybeSetClipboard(ResultHandler resultHandler) {
-        if (copyToClipboard && !resultHandler.areContentsSecure()) {
-            ClipboardInterface.setText(resultHandler.getDisplayContents(), this);
-        }
-    }
-
     private void sendReplyMessage(int id, Object arg, long delayMS) {
         if (handler != null) {
             Message message = Message.obtain(handler, id, arg);
@@ -704,8 +655,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     private void resetStatusView() {
         resultView.setVisibility(View.GONE);
-        statusView.setText(R.string.msg_default_status);
-        statusView.setVisibility(View.VISIBLE);
         viewfinderView.setVisibility(View.VISIBLE);
         lastResult = null;
     }
