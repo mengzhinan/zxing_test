@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.google.zxing.client.android"
     android:installLocation="auto">
+
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,13 +12,12 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- unavailable in API 23 -->
     <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="22" />
 
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-feature
@@ -35,6 +36,7 @@
         <activity
             android:name=".CaptureActivity"
             android:clearTaskOnLaunch="true"
+            android:exported="true"
             android:stateNotNeeded="true"
             android:theme="@style/CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
@@ -97,6 +99,7 @@
             android:stateNotNeeded="true" />
         <activity
             android:name=".encode.EncodeActivity"
+            android:exported="true"
             android:stateNotNeeded="true">
             <intent-filter>
                 <action android:name="com.google.zxing.client.android.ENCODE" />
