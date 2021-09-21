@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.google.zxing.client.android.HttpHelper;
 import com.google.zxing.client.android.LocaleManager;
 import com.google.zxing.client.android.R;
-import com.google.zxing.client.android.history.HistoryManager;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -49,8 +48,8 @@ final class ProductResultInfoRetriever extends SupplementalInfoRetriever {
     private final String source;
     private final Context context;
 
-    ProductResultInfoRetriever(TextView textView, String productID, HistoryManager historyManager, Context context) {
-        super(textView, historyManager);
+    ProductResultInfoRetriever(TextView textView, String productID, Context context) {
+        super(textView);
         this.productID = productID;
         this.source = context.getString(R.string.msg_google_product);
         this.context = context;

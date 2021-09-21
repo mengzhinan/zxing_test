@@ -55,7 +55,6 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.client.android.clipboard.ClipboardInterface;
-import com.google.zxing.client.android.history.HistoryManager;
 import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
@@ -104,7 +103,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private Collection<BarcodeFormat> decodeFormats;
     private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
-    private HistoryManager historyManager;
     private InactivityTimer inactivityTimer;
     private BeepManager beepManager;
     private AmbientLightManager ambientLightManager;
@@ -140,10 +138,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     @Override
     protected void onResume() {
         super.onResume();
-
-        // historyManager must be initialized here to update the history preference
-        historyManager = new HistoryManager(this);
-        historyManager.trimHistory();
 
         // CameraManager must be initialized here, not in onCreate(). This is necessary because we don't
         // want to open the camera driver and measure the screen size if we're going to show the help on
@@ -404,7 +398,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         boolean fromLiveScan = barcode != null;
         if (fromLiveScan) {
-            historyManager.addHistoryItem(rawResult, resultHandler);
             // Then not from history, so beep/vibrate and we have an image to draw on
             beepManager.playBeepSoundAndVibrate();
             drawResultPoints(barcode, scaleFactor, rawResult);
@@ -549,7 +542,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 PreferencesActivity.KEY_SUPPLEMENTAL, true)) {
             SupplementalInfoRetriever.maybeInvokeRetrieval(supplementTextView,
                     resultHandler.getResult(),
-                    historyManager,
                     this);
         }
 
