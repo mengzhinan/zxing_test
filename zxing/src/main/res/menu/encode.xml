@@ -13,17 +13,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_share"
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="1"
-        android:showAsAction="withText|ifRoom"
-        android:title="分享" />
+        android:title="分享"
+        app:showAsAction="withText|ifRoom" />
     <item
         android:id="@+id/menu_encode"
         android:icon="@android:drawable/ic_menu_sort_alphabetically"
         android:orderInCategory="2"
-        android:showAsAction="withText|ifRoom"
-        android:title="@string/menu_encode_vcard" />
+        android:title="@string/menu_encode_vcard"
+        app:showAsAction="withText|ifRoom" />
 </menu>
