@@ -161,7 +161,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         beepManager.updatePrefs();
         ambientLightManager.start(cameraManager);
 
-        inactivityTimer.onResume();
+        inactivityTimer.onResume(this);
 
         Intent intent = getIntent();
 
@@ -381,7 +381,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
      * @param barcode     A greyscale bitmap of the camera data which was decoded.
      */
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
-        inactivityTimer.onActivity();
+        inactivityTimer.onActivity(this);
         lastResult = rawResult;
         ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(rawResult);
 

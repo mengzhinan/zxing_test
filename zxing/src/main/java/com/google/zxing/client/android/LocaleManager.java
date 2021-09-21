@@ -16,10 +16,6 @@
 
 package com.google.zxing.client.android;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,9 +29,7 @@ import java.util.Map;
  */
 public final class LocaleManager {
 
-    private static final String DEFAULT_TLD = "com";
-    private static final String DEFAULT_COUNTRY = "US";
-    private static final String DEFAULT_LANGUAGE = "en";
+    private static final String DEFAULT_LANGUAGE = "zh-rCN";
 
     /**
      * Locales (well, countries) where Google web search is available.
@@ -101,66 +95,14 @@ public final class LocaleManager {
         GOOGLE_PRODUCT_SEARCH_COUNTRY_TLD.put(Locale.US.getCountry(), "com");
     }
 
-    /**
-     * Book search is offered everywhere that web search is available.
-     */
-    private static final Map<String, String> GOOGLE_BOOK_SEARCH_COUNTRY_TLD = GOOGLE_COUNTRY_TLD;
-
     private static final Collection<String> TRANSLATED_HELP_ASSET_LANGUAGES =
             Arrays.asList("de", "en", "es", "fa", "fr", "it", "ja", "ko", "nl", "pt", "ru", "uk", "zh-rCN", "zh");
 
     private LocaleManager() {
     }
 
-    /**
-     * @param context application's {@link Context}
-     * @return country-specific TLD suffix appropriate for the current default locale
-     * (e.g. "co.uk" for the United Kingdom)
-     */
-    public static String getCountryTLD(Context context) {
-        return doGetTLD(GOOGLE_COUNTRY_TLD, context);
-    }
-
-    /**
-     * The same as above, but specifically for Google Product Search.
-     *
-     * @param context application's {@link Context}
-     * @return The top-level domain to use.
-     */
-    public static String getProductSearchCountryTLD(Context context) {
-        return doGetTLD(GOOGLE_PRODUCT_SEARCH_COUNTRY_TLD, context);
-    }
-
-    /**
-     * The same as above, but specifically for Google Book Search.
-     *
-     * @param context application's {@link Context}
-     * @return The top-level domain to use.
-     */
-    public static String getBookSearchCountryTLD(Context context) {
-        return doGetTLD(GOOGLE_BOOK_SEARCH_COUNTRY_TLD, context);
-    }
-
-    /**
-     * Does a given URL point to Google Book Search, regardless of domain.
-     *
-     * @param url The address to check.
-     * @return True if this is a Book Search URL.
-     */
-    public static boolean isBookSearchUrl(String url) {
-        return url.startsWith("http://google.com/books") || url.startsWith("http://books.google.");
-    }
-
-    private static String getSystemCountry() {
-        Locale locale = Locale.getDefault();
-        return locale == null ? DEFAULT_COUNTRY : locale.getCountry();
-    }
-
     private static String getSystemLanguage() {
         Locale locale = Locale.getDefault();
-        if (locale == null) {
-            return DEFAULT_LANGUAGE;
-        }
         // Special case Chinese
         if (Locale.SIMPLIFIED_CHINESE.equals(locale)) {
             return "zh-rCN";
@@ -171,20 +113,6 @@ public final class LocaleManager {
     static String getTranslatedAssetLanguage() {
         String language = getSystemLanguage();
         return TRANSLATED_HELP_ASSET_LANGUAGES.contains(language) ? language : DEFAULT_LANGUAGE;
-    }
-
-    private static String doGetTLD(Map<String, String> map, Context context) {
-        String tld = map.get(getCountry(context));
-        return tld == null ? DEFAULT_TLD : tld;
-    }
-
-    private static String getCountry(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String countryOverride = prefs.getString(PreferencesActivity.KEY_SEARCH_COUNTRY, "-");
-        if (countryOverride != null && !countryOverride.isEmpty() && !"-".equals(countryOverride)) {
-            return countryOverride;
-        }
-        return getSystemCountry();
     }
 
 }

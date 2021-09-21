@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
@@ -45,12 +46,12 @@ final class InactivityTimer {
         this.activity = activity;
         powerStatusReceiver = new PowerStatusReceiver();
         registered = false;
-        onActivity();
+        onActivity(activity);
     }
 
-    synchronized void onActivity() {
+    synchronized void onActivity(Activity activity) {
         cancel();
-        inactivityTask = new InactivityAsyncTask();
+        inactivityTask = new InactivityAsyncTask(activity);
         try {
             inactivityTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (RejectedExecutionException ree) {
@@ -68,14 +69,14 @@ final class InactivityTimer {
         }
     }
 
-    synchronized void onResume() {
+    synchronized void onResume(Activity activity) {
         if (registered) {
             Log.w(TAG, "PowerStatusReceiver was already registered?");
         } else {
             activity.registerReceiver(powerStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
             registered = true;
         }
-        onActivity();
+        onActivity(activity);
     }
 
     private synchronized void cancel() {
@@ -97,7 +98,11 @@ final class InactivityTimer {
                 // 0 indicates that we're on battery
                 boolean onBatteryNow = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) <= 0;
                 if (onBatteryNow) {
-                    InactivityTimer.this.onActivity();
+                    Activity activity = null;
+                    if (context instanceof Activity) {
+                        activity = (Activity) context;
+                    }
+                    InactivityTimer.this.onActivity(activity);
                 } else {
                     InactivityTimer.this.cancel();
                 }
@@ -105,13 +110,24 @@ final class InactivityTimer {
         }
     }
 
-    private final class InactivityAsyncTask extends AsyncTask<Object, Object, Object> {
+    private static final class InactivityAsyncTask extends AsyncTask<Object, Object, Object> {
+        private final WeakReference<Activity> weakReference;
+
+        private InactivityAsyncTask(Activity activity) {
+            weakReference = new WeakReference<>(activity);
+        }
+
         @Override
         protected Object doInBackground(Object... objects) {
             try {
                 Thread.sleep(INACTIVITY_DELAY_MS);
                 Log.i(TAG, "Finishing activity due to inactivity");
-                activity.finish();
+                if (weakReference != null) {
+                    Activity activity = weakReference.get();
+                    if (activity != null) {
+                        activity.finish();
+                    }
+                }
             } catch (InterruptedException e) {
                 // continue without killing
             }
