@@ -513,10 +513,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
         contentsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
 
-        TextView supplementTextView = findViewById(R.id.contents_supplement_text_view);
-        supplementTextView.setText("");
-        supplementTextView.setOnClickListener(null);
-
     }
 
     // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.
