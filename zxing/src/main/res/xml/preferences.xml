@@ -46,7 +46,7 @@
             android:key="preferences_play_beep"
             android:title="@string/preferences_play_beep_title" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="preferences_vibrate"
             android:title="@string/preferences_vibrate_title" />
     </PreferenceCategory>
