@@ -2,6 +2,8 @@ package com.google.zxing.client.android.Util;
 
 import android.graphics.Point;
 
+import com.google.zxing.PlanarYUVLuminanceSource;
+
 /**
  * Author: duke
  * DateTime: 2021-09-25 23-32
@@ -41,6 +43,21 @@ public class PreviewUtil {
             a = a - b;
         }
         return new Point(a, b);
+    }
+
+    /**
+     * (设置竖屏后)，解决 [近距离无法识别二维码] 问题
+     * <p>
+     * 修改 CameraManager.buildLuminanceSource(...) 方法
+     * return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+     *
+     * @return
+     */
+    public static PlanarYUVLuminanceSource getNewPlanarYUVLuminanceSource(byte[] data, int width, int height) {
+        // Go ahead and assume it's YUV rather than die.
+//        return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
+//                rect.width(), rect.height(), false);
+        return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
     }
 
 }

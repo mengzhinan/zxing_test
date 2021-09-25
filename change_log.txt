@@ -8,7 +8,7 @@ A: 删除 AndroidManifest.xml 中 .CaptureActivity 的 intent-filter：
     <category android:name="android.intent.category.LAUNCHER" />
 </intent-filter>
 
-3、如何修复竖屏扫码时，图像变形？
+3、如何修复竖屏扫码时图像变形？
 A: 修改代码 CameraConfigurationManager.initFromCameraParameters(OpenCamera camera)
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 交换大小，修复预览图像拉伸
@@ -46,9 +46,14 @@ Log.i(TAG, "Best available preview size: " + bestPreviewSize);
     }
 
 
-4、
+4、(设置竖屏后)，如何修复近距离无法识别二维码？
+A: 修改 CameraManager.buildLuminanceSource(...) 方法：
+return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+
+
+5、如何修复无法识别条形码？
 A:
 
-5、
-A:
+
+
 

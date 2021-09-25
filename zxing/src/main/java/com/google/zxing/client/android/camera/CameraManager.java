@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
+import com.google.zxing.client.android.Util.PreviewUtil;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 import com.google.zxing.client.android.camera.open.OpenCameraInterface;
 
@@ -321,8 +322,10 @@ public final class CameraManager {
             return null;
         }
         // Go ahead and assume it's YUV rather than die.
-        return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
-                rect.width(), rect.height(), false);
+//        return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
+//                rect.width(), rect.height(), false);
+//        return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+        return PreviewUtil.getNewPlanarYUVLuminanceSource(data, width, height);
     }
 
 }
