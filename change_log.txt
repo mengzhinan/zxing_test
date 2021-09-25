@@ -24,6 +24,28 @@ bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, 
 Log.i(TAG, "Best available preview size: " + bestPreviewSize);
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+/**
+     * 交换 x 和 y 的值，解决竖屏扫码预览时图像拉伸
+     *
+     * @param point 原 point 对象
+     * @return 无返回值，直接在原 point 对象内存地址里面修改
+     */
+    private Point repairVerticalPreviewStretch(Point point) {
+        if (point == null) {
+            return null;
+        }
+        int a = point.x;
+        int b = point.y;
+        if (a < b) {
+            // 交换大小
+            a = a + b;
+            b = a - b;
+            a = a - b;
+        }
+        return new Point(a, b);
+    }
+
+
 4、
 A:
 

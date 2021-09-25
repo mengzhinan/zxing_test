@@ -27,6 +27,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import com.google.zxing.client.android.PreferencesActivity;
+import com.google.zxing.client.android.Util.PreviewUtil;
 import com.google.zxing.client.android.camera.open.CameraFacing;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 
@@ -107,11 +108,15 @@ final class CameraConfigurationManager {
         Point theScreenResolution = new Point();
         display.getSize(theScreenResolution);
         screenResolution = theScreenResolution;
-        Log.i(TAG, "Screen resolution in current orientation: " + screenResolution);
-        cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
-        Log.i(TAG, "Camera resolution: " + cameraResolution);
-        bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
-        Log.i(TAG, "Best available preview size: " + bestPreviewSize);
+
+        // 不要去尝试修改 screenResolution 和 theScreenResolution
+        // 他们都是共用的内存对象，修改后会影响到页面预览框大小和位置
+        // 解决竖屏预览时图像拉伸问题
+        Point newPoint = PreviewUtil.repairVerticalPreviewStretch(screenResolution);
+//        cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+        cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
+//        bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+        bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
 
         boolean isScreenPortrait = screenResolution.x < screenResolution.y;
         boolean isPreviewSizePortrait = bestPreviewSize.x < bestPreviewSize.y;
