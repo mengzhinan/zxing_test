@@ -27,7 +27,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import com.google.zxing.client.android.PreferencesActivity;
-import com.google.zxing.client.android.Util.PreviewUtil;
+import com.google.zxing.client.android.util.PreviewUtil;
 import com.google.zxing.client.android.camera.open.CameraFacing;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 

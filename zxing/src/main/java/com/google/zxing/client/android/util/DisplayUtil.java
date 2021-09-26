@@ -1,4 +1,4 @@
-package com.google.zxing.client.android.Util;
+package com.google.zxing.client.android.util;
 
 import android.content.Context;
 import android.graphics.Point;

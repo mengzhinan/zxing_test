@@ -1,6 +1,9 @@
-package com.google.zxing.client.android.Util;
+package com.google.zxing.client.android.util;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
 
@@ -58,6 +61,24 @@ public class PreviewUtil {
 //        return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
 //                rect.width(), rect.height(), false);
         return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+    }
+
+    public static Rect getFramingRectInPreview(Context context, Rect rect, Point cameraResolution, Point screenResolution) {
+        int orientation = context.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // 竖屏
+            rect.left = rect.left * cameraResolution.y / screenResolution.x;
+            rect.right = rect.right * cameraResolution.y / screenResolution.x;
+            rect.top = rect.top * cameraResolution.x / screenResolution.y;
+            rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;
+        } else {
+            // 横屏
+            rect.left = rect.left * cameraResolution.x / screenResolution.x;
+            rect.right = rect.right * cameraResolution.x / screenResolution.x;
+            rect.top = rect.top * cameraResolution.y / screenResolution.y;
+            rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+        }
+        return rect;
     }
 
 }

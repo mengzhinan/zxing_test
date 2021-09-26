@@ -25,9 +25,9 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
-import com.google.zxing.client.android.Util.PreviewUtil;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 import com.google.zxing.client.android.camera.open.OpenCameraInterface;
+import com.google.zxing.client.android.util.PreviewUtil;
 
 import java.io.IOException;
 
@@ -260,11 +260,13 @@ public final class CameraManager {
                 // Called early, before init even finished
                 return null;
             }
-            rect.left = rect.left * cameraResolution.x / screenResolution.x;
-            rect.right = rect.right * cameraResolution.x / screenResolution.x;
-            rect.top = rect.top * cameraResolution.y / screenResolution.y;
-            rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
-            framingRectInPreview = rect;
+
+            framingRectInPreview = PreviewUtil.getFramingRectInPreview(
+                    context,
+                    rect,
+                    cameraResolution,
+                    screenResolution
+            );
         }
         return framingRectInPreview;
     }
