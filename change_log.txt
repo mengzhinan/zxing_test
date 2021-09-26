@@ -52,8 +52,23 @@ return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, fa
 
 
 5、如何修复无法识别条形码？
-A:
+A: 修改 DecodeHandler.decode() 方法，如果是竖屏模式则旋转图像。
+if (PreviewUtil.isOrientationPortrait(activity)) {
+            //竖屏模式，旋转图像
+            byte[] rotatedData = new byte[data.length];
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    rotatedData[x * height + height - y - 1] = data[x + y * width];
+                }
+            }
+            int tmp = width;
+            width = height;
+            height = tmp;
+            data = rotatedData;
+        }
 
-
+6、如何修正预览框宽高？
+A: 修改 CameraManager.getFramingRectInPreview() 方法：
+PreviewUtil.getFramingRectInPreview()
 
 

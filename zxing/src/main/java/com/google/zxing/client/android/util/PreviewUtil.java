@@ -14,6 +14,18 @@ import com.google.zxing.PlanarYUVLuminanceSource;
  */
 public class PreviewUtil {
 
+    public static boolean isOrientationPortrait(Context context) {
+        if (context == null
+                || context.getResources() == null
+                || context.getResources().getConfiguration() == null) {
+            // 默认竖屏扫码
+            return true;
+        }
+        int orientation = context.getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+
     /**
      * 交换 x 和 y 的值，解决竖屏扫码预览时图像拉伸
      * <p>
@@ -33,14 +45,14 @@ public class PreviewUtil {
      * @param point 原 point 对象
      * @return 无返回值，直接在原 point 对象内存地址里面修改
      */
-    public static Point repairVerticalPreviewStretch(Point point) {
+    public static Point repairVerticalPreviewStretch(Context context, Point point) {
         if (point == null) {
             return null;
         }
         int a = point.x;
         int b = point.y;
-        if (a < b) {
-            // 交换大小
+        if (isOrientationPortrait(context)) {
+            // 竖屏扫码模式，交换宽高大小
             a = a + b;
             b = a - b;
             a = a - b;
@@ -53,8 +65,6 @@ public class PreviewUtil {
      * <p>
      * 修改 CameraManager.buildLuminanceSource(...) 方法
      * return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
-     *
-     * @return
      */
     public static PlanarYUVLuminanceSource getNewPlanarYUVLuminanceSource(byte[] data, int width, int height) {
         // Go ahead and assume it's YUV rather than die.
@@ -63,9 +73,14 @@ public class PreviewUtil {
         return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
     }
 
-    public static Rect getFramingRectInPreview(Context context, Rect rect, Point cameraResolution, Point screenResolution) {
-        int orientation = context.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+    /**
+     * 修正预览框宽高
+     */
+    public static Rect getFramingRectInPreview(Context context,
+                                               Rect rect,
+                                               Point cameraResolution,
+                                               Point screenResolution) {
+        if (isOrientationPortrait(context)) {
             // 竖屏
             rect.left = rect.left * cameraResolution.y / screenResolution.x;
             rect.right = rect.right * cameraResolution.y / screenResolution.x;
@@ -80,5 +95,6 @@ public class PreviewUtil {
         }
         return rect;
     }
+
 
 }

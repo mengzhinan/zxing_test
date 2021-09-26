@@ -27,9 +27,9 @@ import android.view.Surface;
 import android.view.WindowManager;
 
 import com.google.zxing.client.android.PreferencesActivity;
-import com.google.zxing.client.android.util.PreviewUtil;
 import com.google.zxing.client.android.camera.open.CameraFacing;
 import com.google.zxing.client.android.camera.open.OpenCamera;
+import com.google.zxing.client.android.util.PreviewUtil;
 
 /**
  * A class which deals with reading, parsing, and setting the camera parameters which are used to
@@ -112,7 +112,7 @@ final class CameraConfigurationManager {
         // 不要去尝试修改 screenResolution 和 theScreenResolution
         // 他们都是共用的内存对象，修改后会影响到页面预览框大小和位置
         // 解决竖屏预览时图像拉伸问题
-        Point newPoint = PreviewUtil.repairVerticalPreviewStretch(screenResolution);
+        Point newPoint = PreviewUtil.repairVerticalPreviewStretch(context, screenResolution);
 //        cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
         cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, newPoint);
 //        bestPreviewSize = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
