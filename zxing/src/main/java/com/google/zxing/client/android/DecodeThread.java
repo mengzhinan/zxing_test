@@ -76,10 +76,10 @@ final class DecodeThread extends Thread {
             if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_DATA_MATRIX, true)) {
                 decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS);
             }
-            if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_AZTEC, false)) {
+            if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_AZTEC, true)) {
                 decodeFormats.addAll(DecodeFormatManager.AZTEC_FORMATS);
             }
-            if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_PDF417, false)) {
+            if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_PDF417, true)) {
                 decodeFormats.addAll(DecodeFormatManager.PDF417_FORMATS);
             }
         }

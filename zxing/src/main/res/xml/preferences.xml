@@ -32,11 +32,11 @@
             android:key="preferences_decode_Data_Matrix"
             android:title="@string/preferences_decode_Data_Matrix_title" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="preferences_decode_Aztec"
             android:title="@string/preferences_decode_Aztec_title" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="preferences_decode_PDF417"
             android:title="@string/preferences_decode_PDF417_title" />
     </PreferenceCategory>
