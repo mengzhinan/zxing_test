@@ -63,11 +63,13 @@ final class QRCodeEncoder {
     private String displayContents;
     private String title;
     private BarcodeFormat format;
+    private Intent intent;
     private final int dimension;
     private final boolean useVCard;
 
     QRCodeEncoder(Context activity, Intent intent, int dimension, boolean useVCard) throws WriterException {
         this.activity = activity;
+        this.intent = intent;
         this.dimension = dimension;
         this.useVCard = useVCard;
         String action = intent.getAction();
@@ -331,12 +333,21 @@ final class QRCodeEncoder {
         if (contentsToEncode == null) {
             return null;
         }
-        Map<EncodeHintType, Object> hints = null;
+        Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);
         String encoding = guessAppropriateEncoding(contentsToEncode);
         if (encoding != null) {
-            hints = new EnumMap<>(EncodeHintType.class);
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
         }
+
+        if (intent != null) {
+            // 如果是二维码，则更改白边大小
+            // 其他格式不建议更改白边，本身白边就很小
+            if (intent.getStringExtra(Intents.Encode.FORMAT).equals(BarcodeFormat.QR_CODE.name())) {
+                int margin = intent.getIntExtra(EncodeHintType.MARGIN.name(), 0);
+                hints.put(EncodeHintType.MARGIN, margin);
+            }
+        }
+
         BitMatrix result;
         try {
             result = new MultiFormatWriter().encode(contentsToEncode, format, dimension, dimension, hints);
@@ -363,6 +374,7 @@ final class QRCodeEncoder {
         // Very crude at the moment
         for (int i = 0; i < contents.length(); i++) {
             if (contents.charAt(i) > 0xFF) {
+                // 如果某字符的 ASCII 码大于 255，则需要使用 UTF-8 编码格式，否则乱码了
                 return "UTF-8";
             }
         }

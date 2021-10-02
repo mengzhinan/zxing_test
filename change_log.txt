@@ -81,3 +81,23 @@ A:
 // 此格式的二维码，必须是 ISO-8859-1
 data_iso_8859_1 = new String(data.getBytes("UTF-8"), "ISO-8859-1");
 
+9、生成二维码时，如何去除白边？
+A:
+Intent intent = new Intent(context, EncodeActivity.class)
+// 去除白边，边距为 0
+intent.putExtra(EncodeHintType.MARGIN.name(), 0);
+startActivity(intent)
+
+//去读并设置 Margin 参数 com.google.zxing.client.android.encode.QRCodeEncoder.encodeAsBitmap()
+Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);
+if (intent != null) {
+    // 如果是二维码，则更改白边大小
+    // 其他格式不建议更改白边，本身白边就很小
+    if (intent.getStringExtra(Intents.Encode.FORMAT).equals(BarcodeFormat.QR_CODE.name())) {
+        int margin = intent.getIntExtra(EncodeHintType.MARGIN.name(), 0);
+        hints.put(EncodeHintType.MARGIN, margin);
+    }
+}
+
+
+

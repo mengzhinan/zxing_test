@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.FinishListener;
@@ -39,7 +40,6 @@ import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 /**
  * This class encodes data from an Intent into a QR code, and then displays it full screen so that
@@ -67,6 +67,8 @@ public final class EncodeActivity extends Activity {
         intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.QR_CODE.name());
         // 二维码需要设置 type
         intent.putExtra(Intents.Encode.TYPE, Contents.Type.TEXT);
+        // 去除白边
+        intent.putExtra(EncodeHintType.MARGIN.name(), 0);
     }
 
     /**
