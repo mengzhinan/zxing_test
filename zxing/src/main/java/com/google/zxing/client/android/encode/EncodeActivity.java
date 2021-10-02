@@ -38,6 +38,7 @@ import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.FinishListener;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
+import com.google.zxing.client.android.util.PreviewUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -180,7 +181,7 @@ public final class EncodeActivity extends Activity {
 
             TextView contents = findViewById(R.id.contents_text_view);
             if (intent.getBooleanExtra(Intents.Encode.SHOW_CONTENTS, true)) {
-                contents.setText(qrCodeEncoder.getDisplayContents());
+                contents.setText(PreviewUtil.reDecodeText(qrCodeEncoder.getDisplayContents()));
                 setTitle(qrCodeEncoder.getTitle());
             } else {
                 contents.setText("");
