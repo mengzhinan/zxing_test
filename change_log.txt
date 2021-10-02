@@ -71,4 +71,10 @@ if (PreviewUtil.isOrientationPortrait(activity)) {
 A: 修改 CameraManager.getFramingRectInPreview() 方法：
 PreviewUtil.getFramingRectInPreview()
 
+7、修复 PDF_417、DataMatrix 条码解析中文乱码问题？
+A: // 针对 PDF_417/DATA_MATRIX，重新 new String() 解决乱码问题
+TextResultHandler.getDisplayContents()
+PreviewUtil.reDecodeText(oldText)
+
+
 

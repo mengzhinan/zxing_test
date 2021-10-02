@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.WifiParsedResult;
 
@@ -27,8 +28,8 @@ import com.google.zxing.client.result.WifiParsedResult;
  */
 public final class WifiResultHandler extends ResultHandler {
 
-    public WifiResultHandler(ParsedResult result) {
-        super(result);
+    public WifiResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
 

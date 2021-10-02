@@ -16,6 +16,8 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.android.util.PreviewUtil;
 import com.google.zxing.client.result.ParsedResult;
 
 /**
@@ -26,9 +28,18 @@ import com.google.zxing.client.result.ParsedResult;
 public final class TextResultHandler extends ResultHandler {
 
 
-    public TextResultHandler(ParsedResult result) {
-        super(result);
+    public TextResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
-
+    @Override
+    public CharSequence getDisplayContents() {
+        String finalText = super.getDisplayContents().toString();
+        // 针对 PDF_417/DATA_MATRIX，重新 new String() 解决乱码问题
+        if (barcodeFormat == BarcodeFormat.PDF_417
+                || barcodeFormat == BarcodeFormat.DATA_MATRIX) {
+            finalText = PreviewUtil.reDecodeText(finalText);
+        }
+        return finalText;
+    }
 }

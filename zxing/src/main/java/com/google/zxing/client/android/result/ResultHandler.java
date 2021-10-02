@@ -18,6 +18,7 @@ package com.google.zxing.client.android.result;
 
 import android.telephony.PhoneNumberUtils;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ParsedResultType;
 
@@ -34,10 +35,14 @@ import com.google.zxing.client.result.ParsedResultType;
  */
 public abstract class ResultHandler {
 
+    // 二维码类型。如：条形码、二维码、PDF417、DataMatrix 等。
+    protected final BarcodeFormat barcodeFormat;
+
     private final ParsedResult result;
 
-    ResultHandler(ParsedResult result) {
+    ResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
         this.result = result;
+        barcodeFormat = pBarcodeFormat;
     }
 
     public final ParsedResult getResult() {

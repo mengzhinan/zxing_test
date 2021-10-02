@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.ParsedResult;
 
 /**
@@ -26,8 +27,8 @@ import com.google.zxing.client.result.ParsedResult;
 public final class URIResultHandler extends ResultHandler {
 
 
-    public URIResultHandler(ParsedResult result) {
-        super(result);
+    public URIResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
 

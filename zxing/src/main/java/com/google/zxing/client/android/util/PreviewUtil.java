@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.text.TextUtils;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
+
+import java.nio.charset.Charset;
 
 /**
  * Author: duke
@@ -96,5 +99,21 @@ public class PreviewUtil {
         return rect;
     }
 
-
+    /**
+     * 解决 PDF_417/DATA_MATRIX 格式乱码问题
+     */
+    public static String reDecodeText(String oldText) {
+        String newStr = oldText;
+        if (TextUtils.isEmpty(newStr)) {
+            return newStr;
+        }
+        try {
+            String oldCharSet = "ISO-8859-1";
+            // boolean canEncode = Charset.forName(oldCharSet).newEncoder().canEncode(newStr);
+            newStr = new String(newStr.getBytes(oldCharSet), Charset.defaultCharset());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newStr;
+    }
 }

@@ -21,6 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.AddressBookParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 
@@ -50,8 +51,8 @@ public final class AddressBookResultHandler extends ResultHandler {
         }
     }
 
-    public AddressBookResultHandler(ParsedResult result) {
-        super(result);
+    public AddressBookResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
     private static long parseDate(String s) {

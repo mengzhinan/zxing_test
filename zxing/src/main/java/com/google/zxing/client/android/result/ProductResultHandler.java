@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.ParsedResult;
 
 /**
@@ -25,8 +26,8 @@ import com.google.zxing.client.result.ParsedResult;
  */
 public final class ProductResultHandler extends ResultHandler {
 
-    public ProductResultHandler(ParsedResult result) {
-        super(result);
+    public ProductResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
 }

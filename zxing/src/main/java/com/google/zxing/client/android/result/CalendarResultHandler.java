@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.CalendarParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 
@@ -29,8 +30,8 @@ import java.text.DateFormat;
  */
 public final class CalendarResultHandler extends ResultHandler {
 
-    public CalendarResultHandler(ParsedResult result) {
-        super(result);
+    public CalendarResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
     @Override

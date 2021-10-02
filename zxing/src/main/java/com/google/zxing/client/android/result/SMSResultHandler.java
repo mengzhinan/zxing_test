@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.SMSParsedResult;
 
@@ -26,8 +27,8 @@ import com.google.zxing.client.result.SMSParsedResult;
  */
 public final class SMSResultHandler extends ResultHandler {
 
-    public SMSResultHandler(ParsedResult result) {
-        super(result);
+    public SMSResultHandler(ParsedResult result, BarcodeFormat pBarcodeFormat) {
+        super(result, pBarcodeFormat);
     }
 
 

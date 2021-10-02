@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android.result;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ResultParser;
@@ -31,30 +32,34 @@ public final class ResultHandlerFactory {
     }
 
     public static ResultHandler makeResultHandler(Result rawResult) {
+        BarcodeFormat barcodeFormat = null;
+        if (rawResult != null) {
+            barcodeFormat = rawResult.getBarcodeFormat();
+        }
         ParsedResult result = parseResult(rawResult);
         switch (result.getType()) {
             case ADDRESSBOOK:
-                return new AddressBookResultHandler(result);
+                return new AddressBookResultHandler(result, barcodeFormat);
             case EMAIL_ADDRESS:
-                return new EmailAddressResultHandler(result);
+                return new EmailAddressResultHandler(result, barcodeFormat);
             case PRODUCT:
-                return new ProductResultHandler(result);
+                return new ProductResultHandler(result, barcodeFormat);
             case URI:
-                return new URIResultHandler(result);
+                return new URIResultHandler(result, barcodeFormat);
             case WIFI:
-                return new WifiResultHandler(result);
+                return new WifiResultHandler(result, barcodeFormat);
             case GEO:
-                return new GeoResultHandler(result);
+                return new GeoResultHandler(result, barcodeFormat);
             case TEL:
-                return new TelResultHandler(result);
+                return new TelResultHandler(result, barcodeFormat);
             case SMS:
-                return new SMSResultHandler(result);
+                return new SMSResultHandler(result, barcodeFormat);
             case CALENDAR:
-                return new CalendarResultHandler(result);
+                return new CalendarResultHandler(result, barcodeFormat);
             case ISBN:
-                return new ISBNResultHandler(result);
+                return new ISBNResultHandler(result, barcodeFormat);
             default:
-                return new TextResultHandler(result);
+                return new TextResultHandler(result, barcodeFormat);
         }
     }
 
