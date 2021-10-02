@@ -102,7 +102,7 @@ public final class EncodeActivity extends Activity {
     /**
      * Data_Matrix 二维码
      */
-    public static void setIntentDataMatrix(Intent intent, String data) {
+    public static void setIntentDataMatrix(Intent intent, String data, Bitmap bitmapLogo) {
         if (intent == null) {
             return;
         }
@@ -121,6 +121,9 @@ public final class EncodeActivity extends Activity {
         intent.putExtra(EncodeHintType.MARGIN.name(), 5);
         intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
         intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
+
+        // 设置 Logo
+        intent.putExtra(QRCodeEncoder.BITMAP_LOGO, bitmapLogo);
     }
 
     @Override

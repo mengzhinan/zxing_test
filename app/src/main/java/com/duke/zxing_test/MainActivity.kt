@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
         tvProductCodeDataMatrix?.setOnClickListener {
             val data = tvProductCodeDataMatrix?.text?.toString() ?: "无"
             val intent = Intent(this, EncodeActivity::class.java)
-            EncodeActivity.setIntentDataMatrix(intent, data)
+            val logo = BitmapFactory.decodeResource(resources, R.drawable.tom)
+            EncodeActivity.setIntentDataMatrix(intent, data, logo)
             startActivity(intent)
         }
 
