@@ -72,8 +72,8 @@ public final class EncodeActivity extends Activity {
         intent.putExtra(Intents.Encode.TYPE, Contents.Type.TEXT);
         // 去除白边
         intent.putExtra(EncodeHintType.MARGIN.name(), 1);
-        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
-        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
+//        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
+//        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
 
         // 指定纠错等级 getBits()/int
         intent.putExtra(EncodeHintType.ERROR_CORRECTION.name(), ErrorCorrectionLevel.H.getBits());
@@ -95,8 +95,8 @@ public final class EncodeActivity extends Activity {
 
         // 去除白边
         intent.putExtra(EncodeHintType.MARGIN.name(), 20);
-        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
-        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
+//        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
+//        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
     }
 
     /**
@@ -119,8 +119,8 @@ public final class EncodeActivity extends Activity {
 
         // 去除白边
         intent.putExtra(EncodeHintType.MARGIN.name(), 5);
-        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
-        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
+//        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
+//        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
 
         // 设置 Logo
         intent.putExtra(QRCodeEncoder.BITMAP_LOGO, bitmapLogo);
