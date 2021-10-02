@@ -46,7 +46,7 @@ dependencies {
     testImplementation "junit:junit:4.13.2"
 
 
-    implementation "androidx.constraintlayout:constraintlayout:2.1.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.1"
 
     // 65536
     // 5.0 21 以上默认支持 64k

@@ -10,15 +10,21 @@ import com.google.zxing.client.android.CaptureActivity
 class MainActivity : AppCompatActivity() {
 
     private var tvScan: TextView? = null
+    private var tvProductCode: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         tvScan = findViewById(R.id.tv_scan)
+        tvProductCode = findViewById(R.id.tv_product_code)
 
         tvScan?.setOnClickListener {
             scan()
+        }
+
+        tvProductCode?.setOnClickListener {
+
         }
 
         scan()
