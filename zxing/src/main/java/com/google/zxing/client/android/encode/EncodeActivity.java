@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,7 +70,9 @@ public final class EncodeActivity extends Activity {
         // 二维码需要设置 type
         intent.putExtra(Intents.Encode.TYPE, Contents.Type.TEXT);
         // 去除白边
-        intent.putExtra(EncodeHintType.MARGIN.name(), 0);
+        intent.putExtra(EncodeHintType.MARGIN.name(), 1);
+        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
+        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
     }
 
     /**
@@ -82,6 +85,11 @@ public final class EncodeActivity extends Activity {
         intent.setAction(Intents.Encode.ACTION);
         intent.putExtra(Intents.Encode.DATA, data);
         intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.PDF_417.name());
+
+        // 去除白边
+        intent.putExtra(EncodeHintType.MARGIN.name(), 20);
+        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
+        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
     }
 
     /**
@@ -101,6 +109,11 @@ public final class EncodeActivity extends Activity {
         intent.setAction(Intents.Encode.ACTION);
         intent.putExtra(Intents.Encode.DATA, data_iso_8859_1);
         intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.DATA_MATRIX.name());
+
+        // 去除白边
+        intent.putExtra(EncodeHintType.MARGIN.name(), 5);
+        intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
+        intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
     }
 
     @Override

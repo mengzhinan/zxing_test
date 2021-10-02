@@ -58,6 +58,9 @@ final class QRCodeEncoder {
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
 
+    public static final String COLOR_BACKGROUND = "color_background";
+    public static final String COLOR_FOREGROUND = "color_foreground";
+
     private final Context activity;
     private String contents;
     private String displayContents;
@@ -339,11 +342,20 @@ final class QRCodeEncoder {
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
         }
 
+        int backgroundColorInt = WHITE;
+        int foregroundColorInt = BLACK;
         if (intent != null) {
             // 如果设置了 Margin,更改白边大小
             int margin = intent.getIntExtra(EncodeHintType.MARGIN.name(), -1);
             if (margin >= 0) {
                 hints.put(EncodeHintType.MARGIN, margin);
+            }
+
+            if (intent.hasExtra(COLOR_BACKGROUND)) {
+                backgroundColorInt = intent.getIntExtra(COLOR_BACKGROUND, WHITE);
+            }
+            if (intent.hasExtra(COLOR_FOREGROUND)) {
+                foregroundColorInt = intent.getIntExtra(COLOR_FOREGROUND, BLACK);
             }
         }
 
@@ -354,13 +366,14 @@ final class QRCodeEncoder {
             // Unsupported format
             return null;
         }
+
         int width = result.getWidth();
         int height = result.getHeight();
         int[] pixels = new int[width * height];
         for (int y = 0; y < height; y++) {
             int offset = y * width;
             for (int x = 0; x < width; x++) {
-                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+                pixels[offset + x] = result.get(x, y) ? foregroundColorInt : backgroundColorInt;
             }
         }
 
