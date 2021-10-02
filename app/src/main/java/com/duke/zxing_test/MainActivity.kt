@@ -12,21 +12,42 @@ import com.google.zxing.client.android.encode.EncodeActivity
 class MainActivity : AppCompatActivity() {
 
     private var tvScan: TextView? = null
-    private var tvProductCode: TextView? = null
+    private var tvProductCodeQRCode: TextView? = null
+    private var tvProductCodePDF417: TextView? = null
+    private var tvProductCodeDataMatrix: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         tvScan = findViewById(R.id.tv_scan)
-        tvProductCode = findViewById(R.id.tv_product_code)
+        tvProductCodeQRCode = findViewById(R.id.tv_product_code_qrcode)
+        tvProductCodePDF417 = findViewById(R.id.tv_product_code_pdf_417)
+        tvProductCodeDataMatrix = findViewById(R.id.tv_product_code_data_matrix)
 
         tvScan?.setOnClickListener {
             scan()
         }
 
-        tvProductCode?.setOnClickListener {
+        tvProductCodeQRCode?.setOnClickListener {
+            val data = tvProductCodeQRCode?.text?.toString() ?: "无"
             val intent = Intent(this, EncodeActivity::class.java)
+            EncodeActivity.setIntentQRCode(intent, data)
+            startActivity(intent)
+        }
+
+        tvProductCodePDF417?.setOnClickListener {
+            val data = tvProductCodePDF417?.text?.toString() ?: "无"
+            val intent = Intent(this, EncodeActivity::class.java)
+            EncodeActivity.setIntentPDF417(intent, data)
+            startActivity(intent)
+        }
+
+        tvProductCodeDataMatrix?.setOnClickListener {
+            val data = tvProductCodeDataMatrix?.text?.toString() ?: "无"
+            val intent = Intent(this, EncodeActivity::class.java)
+            EncodeActivity.setIntentDataMatrix(intent, data)
             startActivity(intent)
         }
 
@@ -52,4 +73,5 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
 
     }
+
 }

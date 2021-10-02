@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.FinishListener;
@@ -51,6 +52,44 @@ public final class EncodeActivity extends Activity {
 
     private QRCodeEncoder qrCodeEncoder;
 
+    /**
+     * 构造 二维码 intent
+     */
+    public static void setIntentQRCode(Intent intent, String data) {
+        if (intent == null) {
+            return;
+        }
+        intent.setAction(Intents.Encode.ACTION);
+        intent.putExtra(Intents.Encode.DATA, data);
+        intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.QR_CODE.name());
+        // 二维码需要设置 type
+        intent.putExtra(Intents.Encode.TYPE, Contents.Type.TEXT);
+    }
+
+    /**
+     * PDF_417
+     */
+    public static void setIntentPDF417(Intent intent, String data) {
+        if (intent == null) {
+            return;
+        }
+        intent.setAction(Intents.Encode.ACTION);
+        intent.putExtra(Intents.Encode.DATA, data);
+        intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.PDF_417.name());
+    }
+
+    /**
+     * Data_Matrix 二维码
+     */
+    public static void setIntentDataMatrix(Intent intent, String data) {
+        if (intent == null) {
+            return;
+        }
+        intent.setAction(Intents.Encode.ACTION);
+        intent.putExtra(Intents.Encode.DATA, data);
+        intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.DATA_MATRIX.name());
+    }
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -58,12 +97,7 @@ public final class EncodeActivity extends Activity {
         if (intent == null) {
             finish();
         } else {
-            String action = intent.getAction();
-            if (Intents.Encode.ACTION.equals(action) || Intent.ACTION_SEND.equals(action)) {
-                setContentView(R.layout.encode);
-            } else {
-                finish();
-            }
+            setContentView(R.layout.encode);
         }
     }
 

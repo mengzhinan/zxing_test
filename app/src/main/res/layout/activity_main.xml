@@ -20,17 +20,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_product_code"
+        android:id="@+id/tv_product_code_qrcode"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="#50ff0000"
         android:gravity="center"
-        android:text="test_ 测试 hello world.?？ 123454321 ？"
+        android:text="test_ 测试 hello world.?？ 123454321 qrcode"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_scan" />
+
+    <TextView
+        android:id="@+id/tv_product_code_pdf_417"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#500000ff"
+        android:gravity="center"
+        android:text="test_ 测试 hello world.?？ 123454321 PDF_417"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_code_qrcode" />
+
+    <TextView
+        android:id="@+id/tv_product_code_data_matrix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#90ff0000"
+        android:gravity="center"
+        android:text="test_ 测试 hello world.?？ 123454321 DataMatrix"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_code_pdf_417" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
