@@ -33,12 +33,8 @@
     <string name="msg_default_time">时间</string>
     <string name="msg_default_type">类型</string>
     <string name="msg_encode_contents_failed">无法生成条码。</string>
-    <string name="msg_error">错误</string>
-    <string name="msg_invalid_value">值无效</string>
     <string name="preferences_actions_title">扫描成功</string>
     <string name="preferences_auto_focus_title">自动对焦</string>
-    <string name="preferences_custom_product_search_summary" formatted="false">替换：％s=内容，％f=格式，％t=类型</string>
-    <string name="preferences_custom_product_search_title">自定义搜索网址</string>
     <string name="preferences_decode_1D_industrial_title">一维码：工业</string>
     <string name="preferences_decode_1D_product_title">一维码：商品</string>
     <string name="preferences_decode_Aztec_title">Aztec</string>
@@ -62,7 +58,6 @@
     <string name="preferences_name">选项</string>
     <string name="preferences_orientation_title">不自动旋转</string>
     <string name="preferences_play_beep_title">播放提示音</string>
-    <string name="preferences_result_title">搜索设置</string>
     <string name="preferences_scanning_title">条码类型</string>
     <string name="preferences_vibrate_title">振动</string>
 </resources>

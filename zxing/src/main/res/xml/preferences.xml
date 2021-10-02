@@ -72,12 +72,6 @@
             android:key="preferences_orientation"
             android:title="@string/preferences_orientation_title" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/preferences_result_title">
-        <EditTextPreference
-            android:key="preferences_custom_product_search"
-            android:summary="@string/preferences_custom_product_search_summary"
-            android:title="@string/preferences_custom_product_search_title" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_device_bug_workarounds_title">
         <CheckBoxPreference
             android:defaultValue="false"
