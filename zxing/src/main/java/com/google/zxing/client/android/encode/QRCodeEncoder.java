@@ -62,6 +62,7 @@ final class QRCodeEncoder {
 
     public static final String COLOR_BACKGROUND = "color_background";
     public static final String COLOR_FOREGROUND = "color_foreground";
+    public static final String BITMAP_LOGO = "bitmap_logo";
 
     private final Context activity;
     private String contents;
@@ -400,7 +401,11 @@ final class QRCodeEncoder {
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        PreviewUtil.drawLogo(bitmap);
+
+        // 绘制 Logo
+        Bitmap logo = intent.getParcelableExtra(BITMAP_LOGO);
+        PreviewUtil.drawLogo(bitmap, logo);
+
         return bitmap;
     }
 

@@ -123,7 +123,15 @@ public class PreviewUtil {
         return newStr;
     }
 
-    public static void drawLogo(Bitmap bitmap){
+    /**
+     * 绘制中间的 Logo
+     *
+     * @param bitmap
+     * @param bitmapLogo
+     */
+    public static void drawLogo(Bitmap bitmap, Bitmap bitmapLogo) {
 
     }
+
+
 }

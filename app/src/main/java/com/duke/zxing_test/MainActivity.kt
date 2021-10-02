@@ -2,6 +2,7 @@ package com.duke.zxing_test
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,9 @@ class MainActivity : AppCompatActivity() {
         tvProductCodeQRCode?.setOnClickListener {
             val data = tvProductCodeQRCode?.text?.toString() ?: "无"
             val intent = Intent(this, EncodeActivity::class.java)
-            EncodeActivity.setIntentQRCode(intent, data)
+
+            val logo = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+            EncodeActivity.setIntentQRCode(intent, data, logo)
             startActivity(intent)
         }
 

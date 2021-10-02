@@ -61,7 +61,7 @@ public final class EncodeActivity extends Activity {
     /**
      * 构造 二维码 intent
      */
-    public static void setIntentQRCode(Intent intent, String data) {
+    public static void setIntentQRCode(Intent intent, String data, Bitmap bitmapLogo) {
         if (intent == null) {
             return;
         }
@@ -77,6 +77,9 @@ public final class EncodeActivity extends Activity {
 
         // 指定纠错等级 getBits()/int
         intent.putExtra(EncodeHintType.ERROR_CORRECTION.name(), ErrorCorrectionLevel.H.getBits());
+
+        // 设置 Logo
+        intent.putExtra(QRCodeEncoder.BITMAP_LOGO, bitmapLogo);
     }
 
     /**
