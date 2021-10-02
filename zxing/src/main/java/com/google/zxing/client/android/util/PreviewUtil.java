@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.text.TextUtils;
@@ -139,17 +140,45 @@ public final class PreviewUtil {
         //获取图片的宽高
         int srcWidth = srcBitmap.getWidth();
         int srcHeight = srcBitmap.getHeight();
+
+        // 调整 logoBitmap 大小为二维码 bitmap 的 1/5
+        logoBitmap = scaleBitmap(logoBitmap, srcWidth, srcHeight);
+
         int logoWidth = logoBitmap.getWidth();
         int logoHeight = logoBitmap.getHeight();
 
-        // 计算缩放比例。logo 的大小为二维码总体大小的 1/5。
-        float scaleFactor = srcWidth * 1.0f / 5 / logoWidth;
+        Canvas srcCanvas = new Canvas(srcBitmap);
 
-        Canvas canvas = new Canvas(srcBitmap);
-
-        canvas.scale(scaleFactor, scaleFactor, srcWidth >> 1, srcHeight >> 1);
-        canvas.drawBitmap(logoBitmap, (srcWidth - logoWidth) >> 1, (srcHeight - logoHeight) >> 1, null);
+        // 在二维码 bitmap 中心绘制 logo
+        srcCanvas.drawBitmap(logoBitmap, (srcWidth - logoWidth) >> 1, (srcHeight - logoHeight) >> 1, null);
     }
 
+    /**
+     * 缩放 Bigmap
+     *
+     * @param origin       原始 bitmap
+     * @param targetWidth  目标 width
+     * @param targetHeight 目标 height
+     * @return newBitmap
+     */
+    private static Bitmap scaleBitmap(Bitmap origin, int targetWidth, int targetHeight) {
+        if (origin == null || targetWidth <= 0 || targetHeight <= 0) {
+            return origin;
+        }
+        int width = origin.getWidth();
+        int height = origin.getHeight();
 
+        // 计算 logo 的缩放比例。logo 的大小为二维码总体大小的 1/5。
+        float scaleFactorWidth = targetWidth * 1.0f / 5 / width;
+        float scaleFactorHeight = targetHeight * 1.0f / 5 / height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleFactorWidth, scaleFactorHeight);
+        Bitmap newLogoBitmap = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, true);
+
+        if (!origin.isRecycled()) {
+            origin.recycle();
+        }
+        return newLogoBitmap;
+    }
 }
