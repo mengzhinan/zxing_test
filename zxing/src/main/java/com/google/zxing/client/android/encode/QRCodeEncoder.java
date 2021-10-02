@@ -340,10 +340,9 @@ final class QRCodeEncoder {
         }
 
         if (intent != null) {
-            // 如果是二维码，则更改白边大小
-            // 其他格式不建议更改白边，本身白边就很小
-            if (intent.getStringExtra(Intents.Encode.FORMAT).equals(BarcodeFormat.QR_CODE.name())) {
-                int margin = intent.getIntExtra(EncodeHintType.MARGIN.name(), 0);
+            // 如果设置了 Margin,更改白边大小
+            int margin = intent.getIntExtra(EncodeHintType.MARGIN.name(), -1);
+            if (margin >= 0) {
                 hints.put(EncodeHintType.MARGIN, margin);
             }
         }
