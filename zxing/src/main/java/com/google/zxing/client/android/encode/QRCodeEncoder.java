@@ -360,6 +360,7 @@ final class QRCodeEncoder {
             if (intent.hasExtra(COLOR_FOREGROUND)) {
                 foregroundColorInt = intent.getIntExtra(COLOR_FOREGROUND, BLACK);
             }
+
             // 指定纠错等级
             int errorCorrection = intent.getIntExtra(EncodeHintType.ERROR_CORRECTION.name(), -1);
             ErrorCorrectionLevel level = null;
@@ -376,8 +377,10 @@ final class QRCodeEncoder {
                 // Q = ~25% correction
                 level = ErrorCorrectionLevel.Q;
             }
-            // 指定纠错等级
-            hints.put(EncodeHintType.ERROR_CORRECTION, level);
+            if (level != null) {
+                // 指定纠错等级
+                hints.put(EncodeHintType.ERROR_CORRECTION, level);
+            }
         }
 
         BitMatrix result;
