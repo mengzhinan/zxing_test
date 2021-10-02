@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.client.android.CaptureActivity
+import com.google.zxing.client.android.encode.EncodeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,16 +25,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         tvProductCode?.setOnClickListener {
-
+            val intent = Intent(this, EncodeActivity::class.java)
+            startActivity(intent)
         }
 
-        scan()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        DPermission.newInstance(this)
+            .setCallback {
+                // to do
+            }.startRequest(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     private fun scan() {
-        DPermission.newInstance(this)
-            .setCallback {
-                startActivity(Intent(this, CaptureActivity::class.java))
-            }.startRequest(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val intent = Intent(this, CaptureActivity::class.java)
+        startActivity(intent)
     }
 }
