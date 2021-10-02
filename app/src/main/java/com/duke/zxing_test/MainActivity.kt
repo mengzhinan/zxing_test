@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.client.android.CaptureActivity
+import com.google.zxing.client.android.Intents
 import com.google.zxing.client.android.encode.EncodeActivity
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +42,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun scan() {
         val intent = Intent(this, CaptureActivity::class.java)
+
+        val minLength =
+            Math.min(DisplayUtil.getHeightPixels(this), DisplayUtil.getWidthPixels(this))
+
+        intent.putExtra(Intents.Scan.WIDTH, minLength - 50)
+        intent.putExtra(Intents.Scan.HEIGHT, minLength - 50)
+
         startActivity(intent)
+
     }
 }
