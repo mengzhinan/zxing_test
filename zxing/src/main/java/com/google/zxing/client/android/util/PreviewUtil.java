@@ -14,7 +14,7 @@ import com.google.zxing.PlanarYUVLuminanceSource;
  * DateTime: 2021-09-25 23-32
  * Description: 功能说明
  */
-public class PreviewUtil {
+public final class PreviewUtil {
 
     public static boolean isOrientationPortrait(Context context) {
         if (context == null

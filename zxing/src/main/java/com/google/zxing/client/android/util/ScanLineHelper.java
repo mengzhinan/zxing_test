@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
  * DateTime: 2021-09-30 17-12
  * Description: 功能说明
  */
-public class ScanLineHelper {
+public final class ScanLineHelper {
 
     private final RelativeLayout root;
     private final ImageView scanLine;
