@@ -8,8 +8,6 @@ import android.text.TextUtils;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
 
-import java.nio.charset.Charset;
-
 /**
  * Author: duke
  * DateTime: 2021-09-25 23-32
@@ -107,10 +105,17 @@ public class PreviewUtil {
         if (TextUtils.isEmpty(newStr)) {
             return newStr;
         }
+
         try {
-            String oldCharSet = "ISO-8859-1";
+            String CHARSET_ISO_8859_1 = "ISO-8859-1";
+            String CHARSET_UTF_8 = "UTF-8";
+
             // boolean canEncode = Charset.forName(oldCharSet).newEncoder().canEncode(newStr);
-            newStr = new String(newStr.getBytes(oldCharSet), Charset.defaultCharset());
+            // CharsetDecoder decoder = Charset.forName(newStr).newDecoder();
+
+            if (newStr.equals(new String(newStr.getBytes(CHARSET_ISO_8859_1), CHARSET_ISO_8859_1))) {
+                newStr = new String(newStr.getBytes(CHARSET_ISO_8859_1), CHARSET_UTF_8);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
