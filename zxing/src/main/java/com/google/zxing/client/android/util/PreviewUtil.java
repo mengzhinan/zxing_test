@@ -3,6 +3,7 @@ package com.google.zxing.client.android.util;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.text.TextUtils;
@@ -126,11 +127,28 @@ public final class PreviewUtil {
     /**
      * 绘制中间的 Logo
      *
-     * @param bitmap
-     * @param bitmapLogo
+     * @param srcBitmap  二维码位图
+     * @param logoBitmap logo 位图
      */
-    public static void drawLogo(Bitmap bitmap, Bitmap bitmapLogo) {
+    public static void drawLogo(Bitmap srcBitmap, Bitmap logoBitmap) {
+        if (srcBitmap == null || logoBitmap == null) {
+            // 如果二维码 Bitmap 为 null，或者不需要设置 logo，返回二维码 Bitmap。
+            return;
+        }
 
+        //获取图片的宽高
+        int srcWidth = srcBitmap.getWidth();
+        int srcHeight = srcBitmap.getHeight();
+        int logoWidth = logoBitmap.getWidth();
+        int logoHeight = logoBitmap.getHeight();
+
+        // 计算缩放比例。logo 的大小为二维码总体大小的 1/5。
+        float scaleFactor = srcWidth * 1.0f / 5 / logoWidth;
+
+        Canvas canvas = new Canvas(srcBitmap);
+
+        canvas.scale(scaleFactor, scaleFactor, srcWidth >> 1, srcHeight >> 1);
+        canvas.drawBitmap(logoBitmap, (srcWidth - logoWidth) >> 1, (srcHeight - logoHeight) >> 1, null);
     }
 
 

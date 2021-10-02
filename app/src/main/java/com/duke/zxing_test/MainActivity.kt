@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val data = tvProductCodeQRCode?.text?.toString() ?: "无"
             val intent = Intent(this, EncodeActivity::class.java)
 
-            val logo = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+            val logo = BitmapFactory.decodeResource(resources, R.drawable.tom)
             EncodeActivity.setIntentQRCode(intent, data, logo)
             startActivity(intent)
         }
