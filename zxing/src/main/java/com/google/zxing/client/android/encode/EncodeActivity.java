@@ -91,7 +91,7 @@ public final class EncodeActivity extends Activity {
         String data_iso_8859_1 = null;
         try {
             // 此格式的二维码，必须是 ISO-8859-1
-            data_iso_8859_1 = new String(data.getBytes(Charset.defaultCharset()), "ISO-8859-1");
+            data_iso_8859_1 = new String(data.getBytes("UTF-8"), "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -79,5 +79,5 @@ PreviewUtil.reDecodeText(oldText)
 8、如何解决无法生成 DataMatrix 二维码问题？
 A:
 // 此格式的二维码，必须是 ISO-8859-1
-data_iso_8859_1 = new String(data.getBytes(Charset.defaultCharset()), "ISO-8859-1");
+data_iso_8859_1 = new String(data.getBytes("UTF-8"), "ISO-8859-1");
 
