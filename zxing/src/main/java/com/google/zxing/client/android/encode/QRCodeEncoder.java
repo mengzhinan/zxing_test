@@ -31,10 +31,12 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
+import com.google.zxing.client.android.util.PreviewUtil;
 import com.google.zxing.client.result.AddressBookParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ResultParser;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -357,6 +359,24 @@ final class QRCodeEncoder {
             if (intent.hasExtra(COLOR_FOREGROUND)) {
                 foregroundColorInt = intent.getIntExtra(COLOR_FOREGROUND, BLACK);
             }
+            // 指定纠错等级
+            int errorCorrection = intent.getIntExtra(EncodeHintType.ERROR_CORRECTION.name(), -1);
+            ErrorCorrectionLevel level = null;
+            if (errorCorrection == ErrorCorrectionLevel.M.getBits()) {
+                // M = ~15% correction
+                level = ErrorCorrectionLevel.M;
+            } else if (errorCorrection == ErrorCorrectionLevel.L.getBits()) {
+                // L = ~7% correction
+                level = ErrorCorrectionLevel.L;
+            } else if (errorCorrection == ErrorCorrectionLevel.H.getBits()) {
+                // H = ~30% correction
+                level = ErrorCorrectionLevel.H;
+            } else if (errorCorrection == ErrorCorrectionLevel.Q.getBits()) {
+                // Q = ~25% correction
+                level = ErrorCorrectionLevel.Q;
+            }
+            // 指定纠错等级
+            hints.put(EncodeHintType.ERROR_CORRECTION, level);
         }
 
         BitMatrix result;
@@ -379,6 +399,7 @@ final class QRCodeEncoder {
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        PreviewUtil.drawLogo(bitmap);
         return bitmap;
     }
 

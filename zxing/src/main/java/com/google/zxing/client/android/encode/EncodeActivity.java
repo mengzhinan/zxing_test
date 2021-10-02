@@ -40,6 +40,7 @@ import com.google.zxing.client.android.FinishListener;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.android.util.PreviewUtil;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.UnsupportedEncodingException;
 
@@ -73,6 +74,9 @@ public final class EncodeActivity extends Activity {
         intent.putExtra(EncodeHintType.MARGIN.name(), 1);
         intent.putExtra(QRCodeEncoder.COLOR_BACKGROUND, Color.WHITE);
         intent.putExtra(QRCodeEncoder.COLOR_FOREGROUND, Color.BLUE);
+
+        // 指定纠错等级 getBits()/int
+        intent.putExtra(EncodeHintType.ERROR_CORRECTION.name(), ErrorCorrectionLevel.H.getBits());
     }
 
     /**

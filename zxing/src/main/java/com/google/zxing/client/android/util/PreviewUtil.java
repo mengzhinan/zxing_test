@@ -2,6 +2,7 @@ package com.google.zxing.client.android.util;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.text.TextUtils;
@@ -120,5 +121,9 @@ public class PreviewUtil {
             e.printStackTrace();
         }
         return newStr;
+    }
+
+    public static void drawLogo(Bitmap bitmap){
+
     }
 }
