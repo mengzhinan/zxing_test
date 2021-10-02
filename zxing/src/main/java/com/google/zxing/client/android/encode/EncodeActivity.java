@@ -38,6 +38,9 @@ import com.google.zxing.client.android.FinishListener;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
 /**
  * This class encodes data from an Intent into a QR code, and then displays it full screen so that
  * another person can scan it with their device.
@@ -85,8 +88,15 @@ public final class EncodeActivity extends Activity {
         if (intent == null) {
             return;
         }
+        String data_iso_8859_1 = null;
+        try {
+            // 此格式的二维码，必须是 ISO-8859-1
+            data_iso_8859_1 = new String(data.getBytes(Charset.defaultCharset()), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         intent.setAction(Intents.Encode.ACTION);
-        intent.putExtra(Intents.Encode.DATA, data);
+        intent.putExtra(Intents.Encode.DATA, data_iso_8859_1);
         intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.DATA_MATRIX.name());
     }
 

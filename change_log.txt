@@ -71,10 +71,13 @@ if (PreviewUtil.isOrientationPortrait(activity)) {
 A: 修改 CameraManager.getFramingRectInPreview() 方法：
 PreviewUtil.getFramingRectInPreview()
 
-7、修复 PDF_417、DataMatrix 条码解析中文乱码问题？
+7、修复 PDF_417、DataMatrix 条码解析中文乱码问题？(巧妙判断 string 编码格式)
 A: // 针对 PDF_417/DATA_MATRIX，重新 new String() 解决乱码问题
 TextResultHandler.getDisplayContents()
 PreviewUtil.reDecodeText(oldText)
 
-
+8、如何解决无法生成 DataMatrix 二维码问题？
+A:
+// 此格式的二维码，必须是 ISO-8859-1
+data_iso_8859_1 = new String(data.getBytes(Charset.defaultCharset()), "ISO-8859-1");
 
