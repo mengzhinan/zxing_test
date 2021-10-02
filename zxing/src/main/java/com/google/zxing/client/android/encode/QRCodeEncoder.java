@@ -381,6 +381,7 @@ final class QRCodeEncoder {
 
         BitMatrix result;
         try {
+            // 可以设置二维码的宽/高 dimension
             result = new MultiFormatWriter().encode(contentsToEncode, format, dimension, dimension, hints);
         } catch (IllegalArgumentException iae) {
             // Unsupported format
