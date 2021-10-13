@@ -168,9 +168,10 @@ public final class PreviewUtil {
         int width = origin.getWidth();
         int height = origin.getHeight();
 
-        // 计算 logo 的缩放比例。logo 的大小为二维码总体大小的 1/5。
-        float scaleFactorWidth = targetWidth * 1.0f / 5 / width;
-        float scaleFactorHeight = targetHeight * 1.0f / 5 / height;
+        // 计算 logo 的缩放比例。logo 的大小为二维码总体大小的 1/n。
+        int n = 4;
+        float scaleFactorWidth = targetWidth * 1.0f / n / width;
+        float scaleFactorHeight = targetHeight * 1.0f / n / height;
 
         Matrix matrix = new Matrix();
         matrix.postScale(scaleFactorWidth, scaleFactorHeight);
